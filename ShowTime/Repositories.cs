@@ -28,7 +28,6 @@ namespace ShowTime
         {
             Action<TVShow, XmlWriter> saveItemCallback = (show, writer) =>
             {
-                writer.WriteElementString("ID", show.Id.Id.ToString());
                 writer.WriteElementString("Name", show.Name);
                 writer.WriteElementString("Description", show.Description);
             };
@@ -43,7 +42,7 @@ namespace ShowTime
                 var id = long.Parse(element.SelectSingleNode("ID").InnerText);
                 var name = element.SelectSingleNode("Name").InnerText;
                 var description = element.SelectSingleNode("Description").InnerText;
-                return new TVShow(TVShowId.CreateId(id), name, description);
+                return new TVShow(name, description);
             };
 
             LoadRepo<TVShow, TVShowId>(TVShowRepository, loadItemCallback, "TVShow", "C:\\ShowTimeData\\ShowData.xml");

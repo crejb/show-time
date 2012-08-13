@@ -5,13 +5,14 @@ using System.Text;
 using ShowTime.Model;
 using System.Windows.Data;
 using System.Globalization;
+using ShowTime.Services;
 
 namespace ShowTime.ViewModel
 {
     public class SeasonEpisodesIconListViewModel : ViewModelBase
     {
         private DataManager dataManager;
-        private IEpisodeThumbnailProvider thumbnailProvider;
+        private IEpisodeThumbnailFilenameProvider thumbnailProvider;
 
         private Season season;
 
@@ -31,7 +32,7 @@ namespace ShowTime.ViewModel
             get
             {
                 return dataManager.EpisodeRepository
-                    .Query(ep => ep.SeasonId == season.Id)
+                    .Query(ep => ep.SeasonId.Equals(season.Id))
                     .Select(e => new SeasonEpisodesIconListViewModel_EpisodeIconViewModel(e, thumbnailProvider));
             }
         }
@@ -51,7 +52,7 @@ namespace ShowTime.ViewModel
             }
         }
 
-        public SeasonEpisodesIconListViewModel(DataManager dataManager, IEpisodeThumbnailProvider thumbnailProvider, Season season)
+        public SeasonEpisodesIconListViewModel(DataManager dataManager, IEpisodeThumbnailFilenameProvider thumbnailProvider, Season season)
         {
             this.dataManager = dataManager;
             this.thumbnailProvider = thumbnailProvider;
@@ -95,10 +96,10 @@ namespace ShowTime.ViewModel
             get; private set;
         }
 
-        public SeasonEpisodesIconListViewModel_EpisodeIconViewModel(Episode episode, IEpisodeThumbnailProvider thumbnailProvider)
+        public SeasonEpisodesIconListViewModel_EpisodeIconViewModel(Episode episode, IEpisodeThumbnailFilenameProvider thumbnailProvider)
         {
             this.Episode = episode;
-            this.ThumbnailFilename = thumbnailProvider.GetThumbnailFilanemeForEpisode(episode);
+            this.ThumbnailFilename = thumbnailProvider.GetThumbnailFilenameForEpisode(episode).ActualFilename;
         }
     }
     #endregion

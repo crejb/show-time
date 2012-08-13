@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataLoading\DirectoryParsingDataLoader.cs" />
+    <Compile Include="DataLoading\HardcodedDataLoader.cs" />
+    <Compile Include="DataLoading\IDataLoader.cs" />
     <Compile Include="Model\LastWatched.cs" />
     <Compile Include="Model\Bookmark.cs" />
     <Compile Include="Repositories.cs" />
@@ -63,6 +66,10 @@
     <Compile Include="Repositories\SeasonRepository.cs" />
     <Compile Include="Repositories\EpisodeRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Services\Guessers\EpisodeGuesser.cs" />
+    <Compile Include="Services\Guessers\SeasonGuesser.cs" />
+    <Compile Include="Services\Guessers\ShowGuesser.cs" />
+    <Compile Include="Services\ITVShowDiscoveryService.cs" />
     <Compile Include="Strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -70,7 +77,7 @@
     </Compile>
     <Compile Include="ViewModel\BrowseAllShowsViewModel.cs" />
     <Compile Include="ViewModel\EpisodeViewModel.cs" />
-    <Compile Include="ViewModel\IEpisodeThumbnailProvider.cs" />
+    <Compile Include="Services\IEpisodeThumbnailProvider.cs" />
     <Compile Include="ViewModel\ManageShowsViewModel.cs" />
     <Compile Include="ViewModel\SeasonEpisodesIconListViewModel.cs" />
     <Compile Include="ViewModel\TVShowListViewModel.cs" />

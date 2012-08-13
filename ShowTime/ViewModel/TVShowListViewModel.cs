@@ -56,12 +56,12 @@ namespace ShowTime.ViewModel
 
         public int SeasonCount
         {
-            get { return dataManager.SeasonRepository.Query(s=>s.TVShowId == TVShow.Id).Count(); }
+            get { return dataManager.SeasonRepository.Query(s=>s.TVShowId.Equals(TVShow.Id)).Count(); }
         }
 
         public int EpisodeCount
         {
-            get { return dataManager.EpisodeRepository.Query(e => e.TVShowId == TVShow.Id).Count(); }
+            get { return dataManager.EpisodeRepository.Query(e => e.TVShowId.Equals(TVShow.Id)).Count(); }
         }
 
         public TVShowListViewModel_TVShowListViewItemViewModel(DataManager dataManager, TVShow show)
@@ -71,28 +71,5 @@ namespace ShowTime.ViewModel
         }
     }
 
-    //[ValueConversion(typeof(TVShow), typeof(TVShowListViewModel_TVShowListViewItemViewModel))]
-    //public class TVShowListViewModel_TVShowListViewItemConverter : IValueConverter
-    //{
-    //    public object Convert(object value, Type targetType,
-    //        object parameter, CultureInfo culture)
-    //    {
-    //        if (value == null)
-    //            return null;
-
-    //        TVShow show = (TVShow)value;
-    //        return new TVShowListViewModel_TVShowListViewItemViewModel(dataManager, show);
-    //    }
-
-    //    public object ConvertBack(object value, Type targetType,
-    //        object parameter, CultureInfo culture)
-    //    {
-    //        if (value == null)
-    //            return null;
-
-    //        TVShowListViewModel_TVShowListViewItemViewModel showViewModel = (TVShowListViewModel_TVShowListViewItemViewModel)value;
-    //        return showViewModel.TVShow;
-    //    }
-    //}
     #endregion
 }

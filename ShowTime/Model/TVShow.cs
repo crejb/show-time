@@ -11,68 +11,48 @@ namespace ShowTime.Model
         public string Name { get; private set; }
         public string Description { get; private set; }
 
-        public TVShow(TVShowId id, string name, string description)
-        {
-            this.Id = id;
-
-            this.Name = name;
-            this.Description = description;
-        }
-
         public TVShow(string name, string description)
         {
-            this.Id = TVShowId.CreateId();
+            this.Id = TVShowId.CreateId(name);
 
             this.Name = name;
             this.Description = description;
         }
 
-
-    }
-
-    public class IdTracker
-    {
-        private long idCounter = 1;
-        private HashSet<long> usedIds = new HashSet<long>();
-
-        public long GetNextId()
+        public override bool Equals(System.Object other)
         {
-            while (usedIds.Contains(idCounter))
-                idCounter++;
+            TVShow that = other as TVShow;
+            if ((object)that == null)
+            {
+                return false;
+            }
 
-            usedIds.Add(idCounter);
-            return idCounter;
+            return this.Id.Equals(that.Id);
         }
 
-        public long GetId(long id)
+        public bool Equals(TVShow other)
         {
-            if (usedIds.Contains(id))
-                throw new Exception();
+            return this.Id.Equals(other.Id);
+        }
 
-            usedIds.Add(id);
-            return id;
+        public override int GetHashCode()
+        {
+            return this.Id.GetHashCode();
         }
     }
 
     public class TVShowId
     {
-        private static IdTracker idTracker = new IdTracker();
-
-        public static TVShowId CreateId()
+        public static TVShowId CreateId(string name)
         {
-            return new TVShowId(idTracker.GetNextId());
+            return new TVShowId(name);
         }
 
-        public static TVShowId CreateId(long id)
-        {
-            return new TVShowId(idTracker.GetId(id));
-        }
+        public readonly string Name;
 
-        public readonly long Id;
-
-        private TVShowId(long id)
+        private TVShowId(string name)
         {
-            this.Id = id;
+            this.Name = name;
         }
 
         public override bool Equals(System.Object other)
@@ -83,18 +63,17 @@ namespace ShowTime.Model
                 return false;
             }
 
-            // Return true if the fields match:
-            return this.Id == that.Id;
+            return string.CompareOrdinal(this.Name, that.Name) == 0;
         }
 
         public bool Equals(TVShowId other)
         {
-            return this.Id == other.Id;
+            return string.CompareOrdinal(this.Name, other.Name) == 0;
         }
 
         public override int GetHashCode()
         {
-            return this.Id.GetHashCode();
+            return this.Name.GetHashCode();
         }
     }
 }

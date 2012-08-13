@@ -5,13 +5,14 @@ using System.Text;
 using ShowTime.Model;
 using System.Windows.Data;
 using System.Globalization;
+using ShowTime.Services;
 
 namespace ShowTime.ViewModel
 {
     public class BrowseAllShowsViewModel : ViewModelBase
     {
         private DataManager dataManager;
-        private IEpisodeThumbnailProvider episodeThumbnailProvider;
+        private IEpisodeThumbnailFilenameProvider episodeThumbnailProvider;
 
         #region Properties
         private TVShowListViewModel showsViewModel;
@@ -101,7 +102,7 @@ namespace ShowTime.ViewModel
         }
         #endregion
 
-        public BrowseAllShowsViewModel(DataManager dataManager, IEpisodeThumbnailProvider episodeThumbnailProvider)
+        public BrowseAllShowsViewModel(DataManager dataManager, IEpisodeThumbnailFilenameProvider episodeThumbnailProvider)
         {
             this.dataManager = dataManager;
             this.episodeThumbnailProvider = episodeThumbnailProvider;

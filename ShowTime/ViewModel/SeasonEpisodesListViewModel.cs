@@ -30,7 +30,7 @@ namespace ShowTime.ViewModel
             get
             {
                 return dataManager.EpisodeRepository
-                    .Query(ep => ep.SeasonId == season.Id)
+                    .Query(ep => ep.SeasonId.Equals(season.Id))
                     .Select(e => new SeasonEpisodesListViewModel_EpisodeListViewItemViewModel(e));
             }
         }

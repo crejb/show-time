@@ -21,7 +21,7 @@ namespace ShowTime.ViewModel
         public IEnumerable<TVShowSeasonsListViewModel_SeasonListViewItemViewModel> Seasons
         {
             get { return dataManager.SeasonRepository
-                .Query(s => s.TVShowId == TVShow.Id)
+                .Query(s => s.TVShowId.Equals(TVShow.Id))
                 .Select(s => new TVShowSeasonsListViewModel_SeasonListViewItemViewModel(dataManager, s)); }
         }
 
@@ -62,7 +62,7 @@ namespace ShowTime.ViewModel
 
         public int EpisodeCount
         {
-            get { return dataManager.EpisodeRepository.Query(e => e.SeasonId == Season.Id).Count(); }
+            get { return dataManager.EpisodeRepository.Query(e => e.SeasonId.Equals(Season.Id)).Count(); }
         }
 
         public TVShowSeasonsListViewModel_SeasonListViewItemViewModel(DataManager dataManager, Season season)
