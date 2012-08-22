@@ -9,7 +9,7 @@ using ShowTime.Services.Guessers;
 
 namespace ShowTime.Services
 {
-    public interface ITVShowDiscoveryService
+    public interface IEpisodeDetailsBuilder
     {
         EpisodeGuessResults BestGuessEpisode(IEpisodeFileSystemEntry episodeFileSystemEntry);
     }
@@ -31,13 +31,13 @@ namespace ShowTime.Services
         }
     }
 
-    public class TvShowDiscoveryService : ITVShowDiscoveryService
+    public class EpisodeDetailsBuilder : IEpisodeDetailsBuilder
     {
         private IShowAttributeGuesser ShowGuesser { get; set; }
         private ISeasonAttributeGuesser SeasonGuesser { get; set; }
         private IEpisodeAttributeGuesser EpisodeGuesser { get; set; }
 
-        public TvShowDiscoveryService(IShowAttributeGuesser showGuesser, ISeasonAttributeGuesser seasonGuesser, IEpisodeAttributeGuesser episodeGuesser)
+        public EpisodeDetailsBuilder(IShowAttributeGuesser showGuesser, ISeasonAttributeGuesser seasonGuesser, IEpisodeAttributeGuesser episodeGuesser)
         {
             ShowGuesser = showGuesser;
             SeasonGuesser = seasonGuesser;
@@ -66,7 +66,8 @@ namespace ShowTime.Services
         }
     }
 
-    public interface IEpisodeFileSystemEntry{
+    public interface IEpisodeFileSystemEntry
+    {
         string FullFilename{get;}
         string ShortFilename{get;}
         string NameWithoutExtension { get; }

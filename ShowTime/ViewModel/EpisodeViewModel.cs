@@ -8,7 +8,7 @@ namespace ShowTime.ViewModel
 {
     public class EpisodeViewModel : ViewModelBase
     {
-        private DataManager dataManager;
+        private IDataStore dataManager;
         private Episode episode;
 
         public string ShowName
@@ -36,7 +36,7 @@ namespace ShowTime.ViewModel
             get { return episode.Description; }
         }
 
-        public EpisodeViewModel(DataManager dataManager, Episode episode)
+        public EpisodeViewModel(IDataStore dataManager, Episode episode)
         {
             this.dataManager = dataManager;
             this.episode = episode;

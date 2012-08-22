@@ -11,7 +11,7 @@ namespace ShowTime.ViewModel
 {
     public class SeasonEpisodesIconListViewModel : ViewModelBase
     {
-        private DataManager dataManager;
+        private IDataStore dataManager;
         private IEpisodeThumbnailFilenameProvider thumbnailProvider;
 
         private Season season;
@@ -52,7 +52,7 @@ namespace ShowTime.ViewModel
             }
         }
 
-        public SeasonEpisodesIconListViewModel(DataManager dataManager, IEpisodeThumbnailFilenameProvider thumbnailProvider, Season season)
+        public SeasonEpisodesIconListViewModel(IDataStore dataManager, IEpisodeThumbnailFilenameProvider thumbnailProvider, Season season)
         {
             this.dataManager = dataManager;
             this.thumbnailProvider = thumbnailProvider;

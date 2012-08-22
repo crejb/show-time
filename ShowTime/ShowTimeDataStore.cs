@@ -9,13 +9,13 @@ using System.Xml;
 
 namespace ShowTime
 {
-    public class DataManager
+    public class ShowTimeDataStore : ShowTime.IDataStore
     {
         public IRepository<TVShow, TVShowId> TVShowRepository { get; private set; }
         public IRepository<Season, SeasonId> SeasonRepository { get; private set; }
         public IRepository<Episode, EpisodeId> EpisodeRepository { get; private set; }
 
-        public DataManager(IRepository<TVShow, TVShowId> tvShowRepository,
+        public ShowTimeDataStore(IRepository<TVShow, TVShowId> tvShowRepository,
                            IRepository<Season, SeasonId> seasonRepository,
                            IRepository<Episode, EpisodeId> episodeRepository)
         {

@@ -10,7 +10,7 @@ namespace ShowTime.ViewModel
 {
     public class TVShowSeasonsListViewModel : ViewModelBase
     {
-        private DataManager dataManager;
+        private IDataStore dataManager;
         public readonly TVShow TVShow;
 
         public string TVShowName
@@ -40,7 +40,7 @@ namespace ShowTime.ViewModel
             }
         }
 
-        public TVShowSeasonsListViewModel(DataManager dataManager, TVShow tvShow)
+        public TVShowSeasonsListViewModel(IDataStore dataManager, TVShow tvShow)
         {
             this.dataManager = dataManager;
             this.TVShow = tvShow;
@@ -51,7 +51,7 @@ namespace ShowTime.ViewModel
     #region Helper Classes- should be nested classes within TVShowSeasonsListViewModel but that doesn't work with XAML :(
     public class TVShowSeasonsListViewModel_SeasonListViewItemViewModel : ViewModelBase
     {
-        private DataManager dataManager;
+        private IDataStore dataManager;
 
         public readonly Season Season;
 
@@ -65,7 +65,7 @@ namespace ShowTime.ViewModel
             get { return dataManager.EpisodeRepository.Query(e => e.SeasonId.Equals(Season.Id)).Count(); }
         }
 
-        public TVShowSeasonsListViewModel_SeasonListViewItemViewModel(DataManager dataManager, Season season)
+        public TVShowSeasonsListViewModel_SeasonListViewItemViewModel(IDataStore dataManager, Season season)
         {
             this.dataManager = dataManager;
             this.Season = season;

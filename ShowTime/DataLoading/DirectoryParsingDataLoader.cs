@@ -10,15 +10,15 @@ namespace ShowTime.DataLoading
     public class DirectoryParsingDataLoader : IDataLoader
     {
         private readonly string directory;
-        private readonly ITVShowDiscoveryService showDiscoveryService;
+        private readonly IEpisodeDetailsBuilder episodeBuilder;
 
-        public DirectoryParsingDataLoader(string directory, ITVShowDiscoveryService showDiscoveryService)
+        public DirectoryParsingDataLoader(string directory, IEpisodeDetailsBuilder episodeBuilder)
         {
             this.directory = directory;
-            this.showDiscoveryService = showDiscoveryService;
+            this.episodeBuilder = episodeBuilder;
         }
 
-        public void LoadData(DataManager dataManager)
+        public void LoadData(IDataStore dataManager)
         {
             List<string> recursiveFolders = DirSearch(directory);
 
@@ -32,8 +32,6 @@ namespace ShowTime.DataLoading
 
             var tvShows = loadedEpisodes.Select(e => new TVShow(e.TVShowId.Name, "")).Distinct();
             var seasons = loadedEpisodes.Select(e => new Season(e.SeasonId.ShowId, e.SeasonId.SeasonNumber)).Distinct();
-
-
 
             foreach (var show in tvShows)
                 dataManager.TVShowRepository.Insert(show);
@@ -72,7 +70,7 @@ namespace ShowTime.DataLoading
                                           .Where(file => file.Name.EndsWith("avi") || file.Name.EndsWith("mp4")))
             {
                 var episodeFileWrapper = new SystemIOEpisodeFileSystemEntry(file.FullName);
-                var episodeResults = showDiscoveryService.BestGuessEpisode(episodeFileWrapper);
+                var episodeResults = episodeBuilder.BestGuessEpisode(episodeFileWrapper);
                 if (episodeResults.AllDetailsFound)
                 {
                     episodes.Add(episodeResults.Episode);

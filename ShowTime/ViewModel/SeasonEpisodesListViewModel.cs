@@ -10,7 +10,7 @@ namespace ShowTime.ViewModel
 {
     public class SeasonEpisodesListViewModel : ViewModelBase
     {
-        private DataManager dataManager;
+        private IDataStore dataManager;
 
         private Season season;
 
@@ -50,7 +50,7 @@ namespace ShowTime.ViewModel
             }
         }
 
-        public SeasonEpisodesListViewModel(DataManager dataManager, Season season)
+        public SeasonEpisodesListViewModel(IDataStore dataManager, Season season)
         {
             this.dataManager = dataManager;
             this.season = season;

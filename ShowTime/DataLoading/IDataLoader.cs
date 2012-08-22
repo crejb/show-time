@@ -7,10 +7,6 @@ namespace ShowTime.DataLoading
 {
     public interface IDataLoader
     {
-        void LoadData(DataManager dataManager);
+        void LoadData(IDataStore dataManager);
     }
-    
-    
-    
-    
 }

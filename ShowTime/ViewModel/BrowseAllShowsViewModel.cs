@@ -11,7 +11,7 @@ namespace ShowTime.ViewModel
 {
     public class BrowseAllShowsViewModel : ViewModelBase
     {
-        private DataManager dataManager;
+        private IDataStore dataManager;
         private IEpisodeThumbnailFilenameProvider episodeThumbnailProvider;
 
         #region Properties
@@ -102,7 +102,7 @@ namespace ShowTime.ViewModel
         }
         #endregion
 
-        public BrowseAllShowsViewModel(DataManager dataManager, IEpisodeThumbnailFilenameProvider episodeThumbnailProvider)
+        public BrowseAllShowsViewModel(IDataStore dataManager, IEpisodeThumbnailFilenameProvider episodeThumbnailProvider)
         {
             this.dataManager = dataManager;
             this.episodeThumbnailProvider = episodeThumbnailProvider;

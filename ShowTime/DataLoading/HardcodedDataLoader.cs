@@ -8,7 +8,7 @@ namespace ShowTime.DataLoading
 {
     public class HardcodedDataLoader : IDataLoader
     {
-        public void LoadData(DataManager dataManager)
+        public void LoadData(IDataStore dataManager)
         {
             foreach (string showName in new string[] { "The Big Bang Theory", "Masterchef" })
             {
