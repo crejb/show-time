@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="600">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -12,12 +12,31 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0" Height="Auto"  HorizontalAlignment="Stretch" Margin="10,10,10,10" Name="stackPanel1" VerticalAlignment="Top">
-            <Button Content="Search" Height="23" Name="BtnSearch" Width="Auto" DockPanel.Dock="Right" />
-            <TextBox Height="23" Name="textBox1" />
+            <Button Content="Search"
+                    Command="{Binding Path=SearchDirectoryCommand}"
+                    DockPanel.Dock="Right" />
+            <TextBox Text="{Binding Path=SearchDirectory, Mode=TwoWay}" />
         </DockPanel>
-        <ListView Name="listView1" Grid.Row="1" />
+        <ListView Name="listView1" Grid.Row="1" ItemsSource="{Binding Path=DiscoveredEpisodes, Mode=TwoWay}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Add" Width="30" DisplayMemberBinding="{Binding IsSelected, Mode=TwoWay}" />
+                    <GridViewColumn Header="Show" Width="100" DisplayMemberBinding="{Binding ShowName, Mode=TwoWay}" />
+                    <GridViewColumn Header="?" Width="20" DisplayMemberBinding="{Binding IsShowNew}" />
+                    <GridViewColumn Header="Season" Width="50" DisplayMemberBinding="{Binding SeasonNumber, Mode=TwoWay}" />
+                    <GridViewColumn Header="?" Width="20" DisplayMemberBinding="{Binding IsSeasonNew}" />
+                    <GridViewColumn Header="Episode" Width="50" DisplayMemberBinding="{Binding EpisodeNumber, Mode=TwoWay}" />
+                    <GridViewColumn Header="Filename" DisplayMemberBinding="{Binding Filename}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
         <DockPanel Grid.Row="2" Height="Auto"  HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Top">
-            <Button Content="Apply" Height="23" Name="BtnApply" Width="Auto" DockPanel.Dock="Right" />
+            <Button 
+                Content="Apply" 
+                Height="23" 
+                Name="BtnApply" 
+                Width="Auto" 
+                DockPanel.Dock="Right" />
         </DockPanel>
     </Grid>
 </UserControl>

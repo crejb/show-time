@@ -4,17 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace ShowTime.Services.Guessers
+namespace ShowTime.Services.EpisodeDetailsBuilders
 {
-    public interface IShowAttributeGuesser
+    public interface IShowAttributeBuilder
     {
-        ShowGuesserResults GuessShowName(IEpisodeFileSystemEntry episode);
+        ShowAttributeBuilderResults GuessShowName(IEpisodeFileSystemEntry episode);
     }
 
-    public class ShowGuesserResults
+    public class ShowAttributeBuilderResults
     {
         private const string UNKNOWN_SHOW_NAME = "";
-        public static ShowGuesserResults UNKNOWN_RESULTS = new ShowGuesserResults(UNKNOWN_SHOW_NAME);
+        public static ShowAttributeBuilderResults UNKNOWN_RESULTS = new ShowAttributeBuilderResults(UNKNOWN_SHOW_NAME);
 
         public readonly string ShowName;
         public bool Successful
@@ -22,15 +22,15 @@ namespace ShowTime.Services.Guessers
             get { return ShowName != UNKNOWN_SHOW_NAME; }
         }
 
-        public ShowGuesserResults(string showName)
+        public ShowAttributeBuilderResults(string showName)
         {
             this.ShowName = showName;
         }
     }
 
-    public class ShowGuesser : IShowAttributeGuesser
+    public class ShowAttributeBuilder : IShowAttributeBuilder
     {
-        public ShowGuesserResults GuessShowName(IEpisodeFileSystemEntry episode)
+        public ShowAttributeBuilderResults GuessShowName(IEpisodeFileSystemEntry episode)
         {
             // Assumes that the episode contains the name of the show, 
             // and that the parent or grandparent directory is named after the show
@@ -40,13 +40,13 @@ namespace ShowTime.Services.Guessers
 
             string parentDirectoryName = SanitiseName(episode.ParentDirectoryName);
             if (episodeName.Contains(parentDirectoryName))
-                return new ShowGuesserResults(episode.ParentDirectoryName);
+                return new ShowAttributeBuilderResults(episode.ParentDirectoryName);
 
             string grandParentDirectoryName = SanitiseName(episode.GrandParentDirectoryName);
             if (episodeName.Contains(grandParentDirectoryName))
-                return new ShowGuesserResults(episode.GrandParentDirectoryName);
+                return new ShowAttributeBuilderResults(episode.GrandParentDirectoryName);
 
-            return ShowGuesserResults.UNKNOWN_RESULTS;
+            return ShowAttributeBuilderResults.UNKNOWN_RESULTS;
         }
 
         /// <summary>

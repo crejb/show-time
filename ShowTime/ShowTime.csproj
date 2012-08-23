@@ -83,6 +83,8 @@
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\BrowseAllShowsViewModel.cs" />
+    <Compile Include="ViewModel\Commands\CommandViewModel.cs" />
+    <Compile Include="ViewModel\Commands\RelayCommand.cs" />
     <Compile Include="ViewModel\UpdateShowTimeCollectionViewModel.cs" />
     <Compile Include="ViewModel\EpisodeViewModel.cs" />
     <Compile Include="Services\EpisodeThumbnailProvider.cs" />

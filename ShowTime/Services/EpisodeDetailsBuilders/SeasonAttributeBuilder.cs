@@ -5,17 +5,17 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 
-namespace ShowTime.Services.Guessers
+namespace ShowTime.Services.EpisodeDetailsBuilders
 {
-    public interface ISeasonAttributeGuesser
+    public interface ISeasonAttributeBuilder
     {
-        SeasonGuesserResults GuessSeasonNumber(IEpisodeFileSystemEntry episode);
+        SeasonAttributeBuilderResults GuessSeasonNumber(IEpisodeFileSystemEntry episode);
     }
 
-    public class SeasonGuesserResults
+    public class SeasonAttributeBuilderResults
     {
         private const int UNKNOWN_SEASON_NUMBER = -1;
-        public static SeasonGuesserResults UNKNOWN_SEASON_RESULTS = new SeasonGuesserResults(UNKNOWN_SEASON_NUMBER);
+        public static SeasonAttributeBuilderResults UNKNOWN_SEASON_RESULTS = new SeasonAttributeBuilderResults(UNKNOWN_SEASON_NUMBER);
 
         public readonly int Season;
         public bool Successful
@@ -23,28 +23,28 @@ namespace ShowTime.Services.Guessers
             get { return Season != UNKNOWN_SEASON_NUMBER; }
         }
 
-        public SeasonGuesserResults(int guessedSeason)
+        public SeasonAttributeBuilderResults(int guessedSeason)
         {
             this.Season = guessedSeason;
         }
     }
 
-    public class SeasonGuesser : ISeasonAttributeGuesser
+    public class SeasonAttributeBuilder : ISeasonAttributeBuilder
     {
-        public SeasonGuesserResults GuessSeasonNumber(IEpisodeFileSystemEntry episode)
+        public SeasonAttributeBuilderResults GuessSeasonNumber(IEpisodeFileSystemEntry episode)
         {
             // Check if the name of the parent folder is 'season x'
             var result = SearchForSeasonNumberInDirectoryName(episode.ParentDirectoryName);
             if (result.Success)
-                return new SeasonGuesserResults(result.Result);
+                return new SeasonAttributeBuilderResults(result.Result);
 
             // Check if the filename has the season in it
             // Matches *E10*, *e10*
             result = SearchForSeasonNumberInFileName(episode.NameWithoutExtension);
             if (result.Success)
-                return new SeasonGuesserResults(result.Result);
+                return new SeasonAttributeBuilderResults(result.Result);
 
-            return SeasonGuesserResults.UNKNOWN_SEASON_RESULTS;
+            return SeasonAttributeBuilderResults.UNKNOWN_SEASON_RESULTS;
         }
 
         private SearchResult SearchForSeasonNumberInDirectoryName(string directoryName)
