@@ -9,6 +9,7 @@ using ShowTime.Model;
 using ShowTime.Repositories;
 using ShowTime.Services;
 using ShowTime.DataLoading;
+using ShowTime.Services.EpisodeDetailsBuilders;
 
 namespace ShowTime
 {
@@ -60,9 +61,9 @@ namespace ShowTime
             //return new HardcodedDataLoader();
             return new DirectoryParsingDataLoader(@"C:\Users\Chris\Videos",
                 new EpisodeDetailsBuilder(
-                    new ShowTime.Services.Guessers.ShowGuesser(),
-                    new ShowTime.Services.Guessers.SeasonGuesser(),
-                    new ShowTime.Services.Guessers.EpisodeGuesser()));
+                    new ShowTime.Services.EpisodeDetailsBuilders.ShowAttributeBuilder(),
+                    new ShowTime.Services.EpisodeDetailsBuilders.SeasonAttributeBuilder(),
+                    new ShowTime.Services.EpisodeDetailsBuilders.EpisodeAttributeBuilder()));
         }
     }
 

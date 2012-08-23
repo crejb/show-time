@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ShowTime.Services;
 using ShowTime.Model;
+using ShowTime.Services.EpisodeDetailsBuilders;
 
 namespace ShowTime.DataLoading
 {

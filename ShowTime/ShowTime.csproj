@@ -62,24 +62,30 @@
     <Compile Include="Model\LastWatched.cs" />
     <Compile Include="Model\Bookmark.cs" />
     <Compile Include="Services\DirectoryScanner.cs" />
+    <Compile Include="Services\EpisodeDetailsBuilders\EpisodeBuilderResults.cs" />
+    <Compile Include="Services\IEpisodeFileSystemEntry.cs" />
+    <Compile Include="Services\TVShowDiscoverer.cs" />
+    <Compile Include="Services\Providers\DirectoryScannerProvider.cs" />
+    <Compile Include="Services\Providers\TVShowDiscovererProvider.cs" />
     <Compile Include="ShowTimeDataStore.cs" />
     <Compile Include="Repositories\BookmarkRepository.cs" />
     <Compile Include="Repositories\TVShowRepository.cs" />
     <Compile Include="Repositories\SeasonRepository.cs" />
     <Compile Include="Repositories\EpisodeRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
-    <Compile Include="Services\Guessers\EpisodeGuesser.cs" />
-    <Compile Include="Services\Guessers\SeasonGuesser.cs" />
-    <Compile Include="Services\Guessers\ShowGuesser.cs" />
-    <Compile Include="Services\EpisodeDetailsBuilder.cs" />
+    <Compile Include="Services\EpisodeDetailsBuilders\EpisodeAttributeBuilder.cs" />
+    <Compile Include="Services\EpisodeDetailsBuilders\SeasonAttributeBuilder.cs" />
+    <Compile Include="Services\EpisodeDetailsBuilders\ShowAttributeBuilder.cs" />
+    <Compile Include="Services\EpisodeDetailsBuilders\EpisodeDetailsBuilder.cs" />
     <Compile Include="Strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\BrowseAllShowsViewModel.cs" />
+    <Compile Include="ViewModel\UpdateShowTimeCollectionViewModel.cs" />
     <Compile Include="ViewModel\EpisodeViewModel.cs" />
-    <Compile Include="Services\IEpisodeThumbnailProvider.cs" />
+    <Compile Include="Services\EpisodeThumbnailProvider.cs" />
     <Compile Include="ViewModel\ManageShowsViewModel.cs" />
     <Compile Include="ViewModel\SeasonEpisodesIconListViewModel.cs" />
     <Compile Include="ViewModel\TVShowListViewModel.cs" />
