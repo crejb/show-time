@@ -10,6 +10,8 @@ using ShowTime.Repositories;
 using ShowTime.Services;
 using ShowTime.DataLoading;
 using ShowTime.Services.EpisodeDetailsBuilders;
+using ShowTime.View;
+using ShowTime.Services.Providers;
 
 namespace ShowTime
 {
@@ -18,7 +20,7 @@ namespace ShowTime
     /// </summary>
     public partial class App : Application
     {
-        private IDataStore dataManager;
+        private IDataStore dataStore;
         private IEpisodeThumbnailFilenameProvider episodeThumbnailFilenameProvider;
         private IEpisodeThumbnailGenerator episodeThumbnailGenerator;
 
@@ -28,15 +30,27 @@ namespace ShowTime
 
             MainWindow window = new MainWindow();
 
-            dataManager = CreateDataStore();
-            LoadInitialData(dataManager);
+            dataStore = CreateDataStore();
+            LoadInitialData(dataStore);
 
             episodeThumbnailFilenameProvider = new MockEpisodeThumbnailFilenameProvider();
             episodeThumbnailGenerator = new FFMpegEpisodeThumbnailGenerator(episodeThumbnailFilenameProvider);
 
-            // Create the ViewModel to which the main window binds.
-            BrowseAllShowsViewModel browseAllShowsViewModel = new BrowseAllShowsViewModel(dataManager, episodeThumbnailFilenameProvider);
-            window.BrowseAllView.DataContext = browseAllShowsViewModel;
+            //// Create the ViewModel to which the main window binds.
+            //BrowseAllShowsViewModel browseAllShowsViewModel = new BrowseAllShowsViewModel(dataStore, episodeThumbnailFilenameProvider);
+            //window.BrowseAllView.DataContext = browseAllShowsViewModel;
+
+            var directoryScannerProvider = new DirectoryScannerProvider(new EpisodeDetailsBuilder(
+                    new ShowTime.Services.EpisodeDetailsBuilders.ShowAttributeBuilder(),
+                    new ShowTime.Services.EpisodeDetailsBuilders.SeasonAttributeBuilder(),
+                    new ShowTime.Services.EpisodeDetailsBuilders.EpisodeAttributeBuilder()));
+            var discovererProvider = new TVShowDiscovererProvider(dataStore, directoryScannerProvider);
+
+            //window.UpdateView.DataContext = new MainMenuViewModel(); // new UpdateShowTimeCollectionViewModel(dataStore, discovererProvider);
+            NavigatorViewModel navigator = new NavigatorViewModel(dataStore, episodeThumbnailFilenameProvider, discovererProvider);
+            MainWindowViewModel mainViewModel = new MainWindowViewModel(navigator);
+            window.DataContext = mainViewModel;
+            window.ctrlNavigator.DataContext = navigator;
 
             window.Show();
         }
@@ -59,7 +73,7 @@ namespace ShowTime
         private IDataLoader CreateDataLoader()
         {
             //return new HardcodedDataLoader();
-            return new DirectoryParsingDataLoader(@"C:\Users\Chris\Videos",
+            return new DirectoryParsingDataLoader(@"C:\Users\Chris\Videos\Empty",
                 new EpisodeDetailsBuilder(
                     new ShowTime.Services.EpisodeDetailsBuilders.ShowAttributeBuilder(),
                     new ShowTime.Services.EpisodeDetailsBuilders.SeasonAttributeBuilder(),

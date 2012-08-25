@@ -2,18 +2,16 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:viewmodel="clr-namespace:ShowTime.ViewModel"
                     xmlns:view="clr-namespace:ShowTime.View">
-    <!-- 
-  This template applies a SeasonEpisodesView to an instance  
-  of the SeasonEpisodesViewModel
-  -->
-    <DataTemplate DataType="{x:Type viewmodel:SeasonEpisodesListViewModel}">
-        <view:SeasonEpisodesListView />
+    <DataTemplate DataType="{x:Type viewmodel:MainMenuViewModel}">
+        <view:MainMenuView />
     </DataTemplate>
 
-    <!--<Style TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground"  Value="Red"/>
-    </Style>-->
+    <DataTemplate DataType="{x:Type viewmodel:BrowseAllShowsViewModel}">
+        <view:BrowseAllShowsView />
+    </DataTemplate>
 
-
-
+    <DataTemplate DataType="{x:Type viewmodel:UpdateShowTimeCollectionViewModel}">
+        <view:UpdateShowTimeCollectionView />
+    </DataTemplate>
+    
 </ResourceDictionary>

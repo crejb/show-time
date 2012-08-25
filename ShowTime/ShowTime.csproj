@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -84,7 +85,11 @@
     </Compile>
     <Compile Include="ViewModel\BrowseAllShowsViewModel.cs" />
     <Compile Include="ViewModel\Commands\CommandViewModel.cs" />
+    <Compile Include="ViewModel\Commands\MenuItemCommand.cs" />
     <Compile Include="ViewModel\Commands\RelayCommand.cs" />
+    <Compile Include="ViewModel\MainMenuViewModel.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\NavigatorViewModel.cs" />
     <Compile Include="ViewModel\UpdateShowTimeCollectionViewModel.cs" />
     <Compile Include="ViewModel\EpisodeViewModel.cs" />
     <Compile Include="Services\EpisodeThumbnailProvider.cs" />
@@ -96,6 +101,15 @@
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\BrowseAllShowsView.xaml.cs">
       <DependentUpon>BrowseAllShowsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\IconListPanel.xaml.cs">
+      <DependentUpon>IconListPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainMenuView.xaml.cs">
+      <DependentUpon>MainMenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NavigatorView.xaml.cs">
+      <DependentUpon>NavigatorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SeasonEpisodesIconListView.xaml.cs">
       <DependentUpon>SeasonEpisodesIconListView.xaml</DependentUpon>
@@ -132,6 +146,18 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\BrowseAllShowsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\IconListPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainMenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NavigatorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -185,13 +211,17 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="App.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\folder.jpg" />
+    <Resource Include="Resources\tv.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

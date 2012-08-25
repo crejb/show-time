@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="ShowTime.View.NavigatorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="300">
+    <Grid Height="41" Width="86">
+        <!-- TODO: Make this bind to a list of commands, and display as buttons using a items template.-->
+        <!-- The View Model should provide the list of available commands based on the selected view model. -->
+        <Button Command="{Binding HomeCommand}">Home</Button>
+    </Grid>
+</UserControl>

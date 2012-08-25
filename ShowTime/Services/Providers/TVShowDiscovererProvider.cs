@@ -24,6 +24,7 @@ namespace ShowTime.Services.Providers
         public ITVShowDiscoverer GetTVShowDiscoverer(string directory)
         {
             var directoryScanner = directoryScannerProvider.GetDirectoryScanner(directory);
+            directoryScanner.LoadData(dataStore);
             return new TVShowDiscoverer(dataStore, directoryScanner);
         }
     }

@@ -17,14 +17,32 @@
                     DockPanel.Dock="Right" />
             <TextBox Text="{Binding Path=SearchDirectory, Mode=TwoWay}" />
         </DockPanel>
-        <ListView Name="listView1" Grid.Row="1" ItemsSource="{Binding Path=DiscoveredEpisodes, Mode=TwoWay}">
+        <ListView Name="listView1" Grid.Row="1" ItemsSource="{Binding Path=DiscoveredEpisodes}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Add" Width="30" DisplayMemberBinding="{Binding IsSelected, Mode=TwoWay}" />
+                    <GridViewColumn Header="Add" Width="30">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Header="Show" Width="100" DisplayMemberBinding="{Binding ShowName, Mode=TwoWay}" />
-                    <GridViewColumn Header="?" Width="20" DisplayMemberBinding="{Binding IsShowNew}" />
+                    <GridViewColumn Header="?" Width="20" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsShowNew, Mode=OneWay}" IsEnabled="false" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Header="Season" Width="50" DisplayMemberBinding="{Binding SeasonNumber, Mode=TwoWay}" />
-                    <GridViewColumn Header="?" Width="20" DisplayMemberBinding="{Binding IsSeasonNew}" />
+                    <GridViewColumn Header="?" Width="20">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsSeasonNew, Mode=OneWay}" IsEnabled="false" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Header="Episode" Width="50" DisplayMemberBinding="{Binding EpisodeNumber, Mode=TwoWay}" />
                     <GridViewColumn Header="Filename" DisplayMemberBinding="{Binding Filename}" />
                 </GridView>
@@ -33,6 +51,7 @@
         <DockPanel Grid.Row="2" Height="Auto"  HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Top">
             <Button 
                 Content="Apply" 
+                Command="{Binding Path=ApplyCommand}"
                 Height="23" 
                 Name="BtnApply" 
                 Width="Auto" 

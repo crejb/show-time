@@ -7,10 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel Background="Green">
-        <StackPanel.Resources>
-            
-        </StackPanel.Resources>
-
         <ItemsControl FlowDirection="LeftToRight" ItemsSource="{Binding Episodes}" UseLayoutRounding="True">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
@@ -28,18 +24,5 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-
-        <!--<ListView 
-            ItemsSource="{Binding Path=Episodes}" 
-            SelectedItem="{Binding Path=SelectedEpisode, Mode=TwoWay}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Number" DisplayMemberBinding="{Binding Path=Number}" />
-                    <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Path=Title}" />
-                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Path=Description}" />
-                </GridView>
-            </ListView.View>
-            
-        </ListView>-->
     </StackPanel>
 </UserControl>

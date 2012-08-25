@@ -10,6 +10,8 @@ namespace ShowTime.Services
 {
     public interface IDirectoryScanner
     {
+        void LoadData(IDataStore dataManager);
+        
         IEnumerable<TVShow> AllFoundTVShows { get; }
         IEnumerable<Season> AllFoundSeasons { get; }
         IEnumerable<Episode> AllFoundEpisodes { get; }

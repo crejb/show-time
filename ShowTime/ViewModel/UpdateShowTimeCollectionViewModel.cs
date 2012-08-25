@@ -15,8 +15,6 @@ namespace ShowTime.ViewModel
         private IDataStore dataStore;
         private readonly ITVShowDiscovererProvider discovererProvider;
 
-        private Services.ITVShowDiscoverer discoverer;
-
         private ObservableCollection<DiscoveredEpisodeViewModel> discoveredEpisodes;
         public ObservableCollection<DiscoveredEpisodeViewModel> DiscoveredEpisodes
         {
@@ -64,8 +62,6 @@ namespace ShowTime.ViewModel
                         param => this.InsertNewEpisodesIntoRepository(),
                         param => this.CanApply
                         );
-
-            discoverer = discovererProvider.GetTVShowDiscoverer("");
         }
 
         public bool CanSearchDirectory
@@ -81,7 +77,7 @@ namespace ShowTime.ViewModel
             if (!CanSearchDirectory)
                 throw new InvalidOperationException();
 
-            discoverer = discovererProvider.GetTVShowDiscoverer(searchDirectory);
+            var discoverer = discovererProvider.GetTVShowDiscoverer(searchDirectory);
             discoveredEpisodes = new ObservableCollection<DiscoveredEpisodeViewModel>(
                 discoverer.NewEpisodes.Select(episode => new DiscoveredEpisodeViewModel(dataStore, episode))
             );
@@ -107,10 +103,20 @@ namespace ShowTime.ViewModel
 
             var selectedNewEpisodes = discoveredEpisodes.Where(e => e.IsSelected);
 
-            //TODO: Get new TV Shows and Seasons from new episodes
-            // Add new TV Shows to repo
-            // Add new Seasons to repo
-            // Add new Episodes to repo
+            var newShows = selectedNewEpisodes.Where(
+                episode => episode.IsShowNew).Select(episode => new TVShow(episode.ShowName, episode.Description)).Distinct();
+            
+            var newSeasons = selectedNewEpisodes.Where(
+                episode => episode.IsSeasonNew).Select(episode => new Season(episode.TVShowId, episode.SeasonNumber)).Distinct();
+
+            foreach (var show in newShows)
+                dataStore.TVShowRepository.Insert(show);
+
+            foreach (var season in newSeasons)
+                dataStore.SeasonRepository.Insert(season);
+
+            foreach (var episode in selectedNewEpisodes)
+                dataStore.EpisodeRepository.Insert(episode.BuildEpisode());
         }
     }
 
