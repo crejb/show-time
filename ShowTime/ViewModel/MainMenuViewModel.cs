@@ -13,6 +13,7 @@ namespace ShowTime.ViewModel
     {
         public event Action WatchShowsSelected;
         public event Action ManageShowsSelected;
+        public event Action BrowseShowsSelected;
 
         public IEnumerable<MenuItemCommand> MenuItemCommands { get; private set; }
 
@@ -24,13 +25,24 @@ namespace ShowTime.ViewModel
                     "Watch TV Shows",
                     "../Resources/tv.jpg",
                     null,
+                    null,
                     new RelayCommand(
                             param => OnWatchShowsSelected()
                     )
                 ),
                 new MenuItemCommand(
+                    "Browse Database",
+                    "../Resources/tv.jpg",
+                    null,
+                    null,
+                    new RelayCommand(
+                            param => OnBrowseShowsSelected()
+                    )
+                ),
+                new MenuItemCommand(
                     "Manage TV Shows",
                     "../Resources/folder.jpg",
+                    null,
                     null,
                     new RelayCommand(
                             param => OnManageShowsSelected()
@@ -42,6 +54,13 @@ namespace ShowTime.ViewModel
         private void OnManageShowsSelected()
         {
             var handler = ManageShowsSelected;
+            if (handler != null)
+                handler();
+        }
+
+        private void OnBrowseShowsSelected()
+        {
+            var handler = BrowseShowsSelected;
             if (handler != null)
                 handler();
         }

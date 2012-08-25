@@ -5,9 +5,26 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="300">
-    <Grid Height="41" Width="86">
+    <Grid>
         <!-- TODO: Make this bind to a list of commands, and display as buttons using a items template.-->
         <!-- The View Model should provide the list of available commands based on the selected view model. -->
-        <Button Command="{Binding HomeCommand}">Home</Button>
+        
+        <!--<Button Command="{Binding HomeCommand}">Home</Button>-->
+        
+        <ItemsControl HorizontalAlignment="Stretch" ItemsSource="{Binding CommandList}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" Width="Auto">
+                        <Polygon Stroke="Black" Fill="Black" VerticalAlignment="Center" Margin="5" Points="0,0 10,5 0,10, 0,0" />
+                        <Button Content="{Binding DisplayName}" Command="{Binding Command}" ></Button>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </UserControl>

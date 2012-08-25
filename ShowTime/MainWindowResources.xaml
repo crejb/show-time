@@ -13,5 +13,17 @@
     <DataTemplate DataType="{x:Type viewmodel:UpdateShowTimeCollectionViewModel}">
         <view:UpdateShowTimeCollectionView />
     </DataTemplate>
-    
+
+    <DataTemplate DataType="{x:Type viewmodel:TvShowIconsListViewModel}">
+        <view:TvShowIconsListView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewmodel:SeasonIconsListViewModel}">
+        <view:SeasonIconsListView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewmodel:EpisodeIconsListViewModel}">
+        <view:EpisodeIconsListView />
+    </DataTemplate>
+
 </ResourceDictionary>

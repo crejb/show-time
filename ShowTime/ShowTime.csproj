@@ -87,9 +87,12 @@
     <Compile Include="ViewModel\Commands\CommandViewModel.cs" />
     <Compile Include="ViewModel\Commands\MenuItemCommand.cs" />
     <Compile Include="ViewModel\Commands\RelayCommand.cs" />
+    <Compile Include="ViewModel\EpisodeIconsListViewModel.cs" />
+    <Compile Include="ViewModel\TvShowIconsListViewModel.cs" />
     <Compile Include="ViewModel\MainMenuViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\NavigatorViewModel.cs" />
+    <Compile Include="ViewModel\SeasonIconsListViewModel.cs" />
     <Compile Include="ViewModel\UpdateShowTimeCollectionViewModel.cs" />
     <Compile Include="ViewModel\EpisodeViewModel.cs" />
     <Compile Include="Services\EpisodeThumbnailProvider.cs" />
@@ -101,6 +104,15 @@
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\BrowseAllShowsView.xaml.cs">
       <DependentUpon>BrowseAllShowsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EpisodeIconsListView.xaml.cs">
+      <DependentUpon>EpisodeIconsListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SeasonIconsListView.xaml.cs">
+      <DependentUpon>SeasonIconsListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TvShowIconsListView.xaml.cs">
+      <DependentUpon>TvShowIconsListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\IconListPanel.xaml.cs">
       <DependentUpon>IconListPanel.xaml</DependentUpon>
@@ -148,6 +160,18 @@
     <Page Include="View\BrowseAllShowsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EpisodeIconsListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SeasonIconsListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TvShowIconsListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\IconListPanel.xaml">
       <SubType>Designer</SubType>

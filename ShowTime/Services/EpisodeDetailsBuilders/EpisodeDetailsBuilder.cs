@@ -39,7 +39,7 @@ namespace ShowTime.Services.EpisodeDetailsBuilders
                 showId,
                 seasonId,
                 episodeNumberResults.Episode,
-                string.Empty,
+                System.IO.Path.GetFileNameWithoutExtension(episodeFileSystemEntry.FullFilename),
                 string.Empty,
                 episodeFileSystemEntry.FullFilename
             );

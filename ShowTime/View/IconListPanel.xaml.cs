@@ -94,8 +94,8 @@ namespace ShowTime.View
         {
             var menuItem = ((sender as Button).Content as MenuItemCommand);
             ConfirmedItem = menuItem;
-            InvokeCommand(ItemConfirmed);
-            InvokeCommand(menuItem.ConfirmedCommand);
+            InvokeCommand(ItemConfirmed, menuItem);
+            InvokeCommand(menuItem.ConfirmedCommand, menuItem);
             e.Handled = true;
         }
 
@@ -103,15 +103,15 @@ namespace ShowTime.View
         {
             var menuItem = ((sender as Button).Content as MenuItemCommand);
             SelectedItem = menuItem;
-            InvokeCommand(ItemSelected);
-            InvokeCommand(menuItem.SelectedCommand);
+            InvokeCommand(ItemSelected, menuItem);
+            InvokeCommand(menuItem.SelectedCommand, menuItem);
         }
 
-        private void InvokeCommand(ICommand command)
+        private void InvokeCommand(ICommand command, object data)
         {
-            if (command != null && command.CanExecute(null))
+            if (command != null && command.CanExecute(data))
             {
-                command.Execute(null);
+                command.Execute(data);
             }
         }
     }
