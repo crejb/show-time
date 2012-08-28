@@ -88,6 +88,7 @@
     <Compile Include="ViewModel\Commands\MenuItemCommand.cs" />
     <Compile Include="ViewModel\Commands\RelayCommand.cs" />
     <Compile Include="ViewModel\EpisodeIconsListViewModel.cs" />
+    <Compile Include="ViewModel\EpisodePreviewViewModel.cs" />
     <Compile Include="ViewModel\TvShowIconsListViewModel.cs" />
     <Compile Include="ViewModel\MainMenuViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
@@ -107,6 +108,9 @@
     </Compile>
     <Compile Include="View\EpisodeIconsListView.xaml.cs">
       <DependentUpon>EpisodeIconsListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EpisodePreviewView.xaml.cs">
+      <DependentUpon>EpisodePreviewView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SeasonIconsListView.xaml.cs">
       <DependentUpon>SeasonIconsListView.xaml</DependentUpon>
@@ -164,6 +168,10 @@
     <Page Include="View\EpisodeIconsListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\EpisodePreviewView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\SeasonIconsListView.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -38,10 +38,12 @@ namespace ShowTime.ViewModel
         private CommandViewModel homeCommand;
         private CommandViewModel updateCommand;
         private CommandViewModel showsCommand;
+        private Services.IEpisodeThumbnailFilenameProvider episodeThumbnailProvider;
 
         public NavigatorViewModel(IDataStore dataStore, Services.IEpisodeThumbnailFilenameProvider episodeThumbnailProvider, Services.Providers.ITVShowDiscovererProvider discovererProvider)
         {
             this.dataStore = dataStore;
+            this.episodeThumbnailProvider = episodeThumbnailProvider;
 
             homeCommand = new CommandViewModel("Home", new RelayCommand(param => OnHomeCommandExecuted()));
             updateCommand = new CommandViewModel("Update Shows", new RelayCommand(param => OnUpdateCommandExecuted()));
@@ -81,7 +83,7 @@ namespace ShowTime.ViewModel
 
         private void seasonsListViewModel_SeasonSelected(SeasonId seasonId)
         {
-            var episodesListViewModel = new EpisodeIconsListViewModel(dataStore, seasonId);
+            var episodesListViewModel = new EpisodeIconsListViewModel(dataStore, seasonId, episodeThumbnailProvider);
             episodesListViewModel.EpisodeSelected += episodesListViewModel_EpisodeSelected;
             OnNavigateToViewRequested(episodesListViewModel);
         }

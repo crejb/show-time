@@ -9,6 +9,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <view:IconListPanel MenuItemCommands="{Binding MenuItemCommands}" ItemConfirmed="{Binding SelectEpisodeCommand}" />
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <view:IconListPanel Grid.Row="0" x:Name="ctrlEpisodeList" MenuItemCommands="{Binding MenuItemCommands}" ItemSelected="{Binding SelectEpisodeCommand}" />
+        <view:EpisodePreviewView Grid.Row="1" DataContext="{Binding SelectedEpisodePreviewViewModel}"></view:EpisodePreviewView>
     </Grid>
 </UserControl>
