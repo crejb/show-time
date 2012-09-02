@@ -7,24 +7,25 @@ using ShowTime.Model;
 
 namespace ShowTime.Repositories
 {
-    public interface IRepository<T, TKey> where T : Entity<TKey>
+    public interface IRepository<TKey, TValue> where TValue : Entity<TKey>
     {
         // Find an entity by its primary key
         // We assume and enforce that every Entity
         // is identified by an "Id" property of 
         // type long
-        T Find(TKey id);
+        TValue Find(TKey id);
 
         // Query for a specific type of Entity
         // with Linq expressions.  More on this later
-        IQueryable<T> Query();
-        IQueryable<T> Query(Expression<Func<T, bool>> where);
+        IQueryable<TValue> Query();
+        IQueryable<TValue> Query(Expression<Func<TValue, bool>> where);
 
         // Basic operations on an Entity
-        void Delete(T target);
-        void Save(T target);
-        void Insert(T target);
+        void Delete(TValue target);
+        void Insert(TValue target);
 
-        IEnumerable<T> GetAll();
+        IEnumerable<TValue> GetAll();
+
+        void Save();
     }
 }

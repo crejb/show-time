@@ -111,12 +111,15 @@ namespace ShowTime.ViewModel
 
             foreach (var show in newShows)
                 dataStore.TVShowRepository.Insert(show);
+            dataStore.TVShowRepository.Save();
 
             foreach (var season in newSeasons)
                 dataStore.SeasonRepository.Insert(season);
+            dataStore.SeasonRepository.Save();
 
             foreach (var episode in selectedNewEpisodes)
                 dataStore.EpisodeRepository.Insert(episode.BuildEpisode());
+            dataStore.EpisodeRepository.Save();
         }
     }
 

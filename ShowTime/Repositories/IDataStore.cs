@@ -3,8 +3,8 @@ namespace ShowTime
 {
     public interface IDataStore
     {
-        ShowTime.Repositories.IRepository<ShowTime.Model.Episode, ShowTime.Model.EpisodeId> EpisodeRepository { get; }
-        ShowTime.Repositories.IRepository<ShowTime.Model.Season, ShowTime.Model.SeasonId> SeasonRepository { get; }
-        ShowTime.Repositories.IRepository<ShowTime.Model.TVShow, ShowTime.Model.TVShowId> TVShowRepository { get; }
+        ShowTime.Repositories.IRepository<ShowTime.Model.EpisodeId, ShowTime.Model.Episode> EpisodeRepository { get; }
+        ShowTime.Repositories.IRepository<ShowTime.Model.SeasonId, ShowTime.Model.Season> SeasonRepository { get; }
+        ShowTime.Repositories.IRepository<ShowTime.Model.TVShowId, ShowTime.Model.TVShow> TVShowRepository { get; }
     }
 }

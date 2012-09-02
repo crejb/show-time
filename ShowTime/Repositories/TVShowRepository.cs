@@ -3,58 +3,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ShowTime.Model;
+using System.Xml;
 
 namespace ShowTime.Repositories
 {
-    public class MockTVShowRepository : IRepository<TVShow, TVShowId>
+    public class TVShowRepository : BaseDictionaryRepository<TVShowId, TVShow>
     {
-        private Dictionary<TVShowId, TVShow> TVShows;
-
-        public MockTVShowRepository() :
-            this(new Dictionary<TVShowId, TVShow>())
+        public TVShowRepository(IRepositoryPersister<TVShowId, TVShow> persister)
+            : base(persister)
         {
         }
+    }
 
-        public MockTVShowRepository(Dictionary<TVShowId, TVShow> tvShows)
+    public class TVShowRepositoryPersister : XMLRepositoryPersister<TVShowId, TVShow>
+    {
+        public TVShowRepositoryPersister(string filename)
         {
-            this.TVShows = tvShows;
+            this.filename = filename;
         }
 
-        public TVShow Find(TVShowId id)
+        protected override string EntityName
         {
-            TVShow show;
-            TVShows.TryGetValue(id, out show);
-            return show;
+            get { return "TVShow"; }
         }
 
-        public IQueryable<TVShow> Query()
+        protected override void SaveEntity(TVShow entity, XmlWriter writer)
         {
-            throw new NotImplementedException();
+            writer.WriteElementString("Name", entity.Name);
+            writer.WriteElementString("Description", entity.Description);
         }
 
-        public IQueryable<TVShow> Query(System.Linq.Expressions.Expression<Func<TVShow, bool>> where)
+        protected override TVShow LoadEntity(XmlElement element)
         {
-            return TVShows.Values.Where(where.Compile()).AsQueryable();
-        }
-
-        public void Delete(TVShow target)
-        {
-            TVShows.Remove(target.Id);
-        }
-
-        public void Save(TVShow target)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Insert(TVShow target)
-        {
-            TVShows.Add(target.Id, target);
-        }
-
-        public IEnumerable<TVShow> GetAll()
-        {
-            return TVShows.Values;
+            var name = element.SelectSingleNode("Name").InnerText;
+            var description = element.SelectSingleNode("Description").InnerText;
+            return new TVShow(name, description);
         }
     }
 }

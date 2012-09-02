@@ -3,58 +3,50 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ShowTime.Model;
+using System.Xml;
 
 namespace ShowTime.Repositories
 {
-    public class MockEpisodeRepository : IRepository<Episode, EpisodeId>
+    public class EpisodeRepository : BaseDictionaryRepository<EpisodeId, Episode>
     {
-        private Dictionary<EpisodeId, Episode> Episodes;
-
-        public MockEpisodeRepository() :
-            this(new Dictionary<EpisodeId, Episode>())
+        public EpisodeRepository(IRepositoryPersister<EpisodeId, Episode> persister)
+            : base(persister)
         {
         }
+    }
 
-        public MockEpisodeRepository(Dictionary<EpisodeId, Episode> Episodes)
+    public class EpisodeRepositoryPersister : XMLRepositoryPersister<EpisodeId, Episode>
+    {
+        public EpisodeRepositoryPersister(string filename)
         {
-            this.Episodes = Episodes;
+            this.filename = filename;
         }
 
-        public Episode Find(EpisodeId id)
+        protected override string EntityName
         {
-            Episode show;
-            Episodes.TryGetValue(id, out show);
-            return show;
+            get { return "Episode"; }
         }
 
-        public IQueryable<Episode> Query()
+        protected override void SaveEntity(Episode entity, XmlWriter writer)
         {
-            throw new NotImplementedException();
+            XmlPersistenceUtilities.SaveSeasonId(entity.SeasonId, writer);
+            writer.WriteElementString("Number", entity.Number.ToString());
+            writer.WriteElementString("Title", entity.Title);
+            writer.WriteElementString("Description", entity.Description);
+            writer.WriteElementString("Filename", entity.Filename);
         }
 
-        public IQueryable<Episode> Query(System.Linq.Expressions.Expression<Func<Episode, bool>> where)
+        protected override Episode LoadEntity(XmlElement element)
         {
-            return Episodes.Values.Where(where.Compile()).AsQueryable();
-        }
+            //var tvShowId = XmlPersistenceUtilities.LoadTVShowId(element);
+            var seasonId = XmlPersistenceUtilities.LoadSeasonId(element);
+            var tvShowId = seasonId.ShowId;
+            var number = int.Parse(element.SelectSingleNode("Number").InnerText);
+            var title = element.SelectSingleNode("Title").InnerText;
+            var description = element.SelectSingleNode("Description").InnerText;
+            var episodeFilename = element.SelectSingleNode("Filename").InnerText;
 
-        public void Delete(Episode target)
-        {
-            Episodes.Remove(target.Id);
-        }
-
-        public void Save(Episode target)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Insert(Episode target)
-        {
-            Episodes.Add(target.Id, target);
-        }
-
-        public IEnumerable<Episode> GetAll()
-        {
-            return Episodes.Values;
+            return new Episode(tvShowId, seasonId, number, title, description, episodeFilename);
         }
     }
 }

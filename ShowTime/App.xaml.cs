@@ -23,6 +23,7 @@ namespace ShowTime
         private IDataStore dataStore;
         private IEpisodeThumbnailFilenameProvider episodeThumbnailFilenameProvider;
         private IEpisodeThumbnailGenerator episodeThumbnailGenerator;
+        private static string SHOWTIME_DATA_DIRECTORY = "C:\\ShowTimeData";
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -57,11 +58,26 @@ namespace ShowTime
 
         private static IDataStore CreateDataStore()
         {
-            var tvShowRepo = new MockTVShowRepository();
-            var seasonRepo = new MockSeasonRepository();
-            var episodeRepo = new MockEpisodeRepository();
+            var tvShowRepo = new TVShowRepository(CreateTVShowRepositoryPersister());
+            var seasonRepo = new SeasonRepository(CreateSeasonRepositoryPersister());
+            var episodeRepo = new EpisodeRepository(CreateEpisodeRepositoryPersister());
 
             return new ShowTimeDataStore(tvShowRepo, seasonRepo, episodeRepo);
+        }
+
+        private static IRepositoryPersister<EpisodeId, Episode> CreateEpisodeRepositoryPersister()
+        {
+            return new EpisodeRepositoryPersister(System.IO.Path.Combine(SHOWTIME_DATA_DIRECTORY, "Data", "Repository_Episode.xml"));
+        }
+
+        private static IRepositoryPersister<SeasonId, Season> CreateSeasonRepositoryPersister()
+        {
+            return new SeasonRepositoryPersister(System.IO.Path.Combine(SHOWTIME_DATA_DIRECTORY, "Data", "Repository_Season.xml"));
+        }
+
+        private static IRepositoryPersister<TVShowId, TVShow> CreateTVShowRepositoryPersister()
+        {
+            return new TVShowRepositoryPersister(System.IO.Path.Combine(SHOWTIME_DATA_DIRECTORY, "Data", "Repository_TVShow.xml"));
         }
 
         private void LoadInitialData(IDataStore dataManager)

@@ -59,9 +59,12 @@
     <Compile Include="DataLoading\DirectoryParsingDataLoader.cs" />
     <Compile Include="DataLoading\HardcodedDataLoader.cs" />
     <Compile Include="DataLoading\IDataLoader.cs" />
+    <Compile Include="Repositories\BaseDictionaryRepository.cs" />
+    <Compile Include="Repositories\XmlRepositoryPersister.cs" />
     <Compile Include="Repositories\IDataStore.cs" />
     <Compile Include="Model\LastWatched.cs" />
     <Compile Include="Model\Bookmark.cs" />
+    <Compile Include="Repositories\IRepositoryPersister.cs" />
     <Compile Include="Services\DirectoryScanner.cs" />
     <Compile Include="Services\EpisodeDetailsBuilders\EpisodeBuilderResults.cs" />
     <Compile Include="Services\IEpisodeFileSystemEntry.cs" />
@@ -97,7 +100,6 @@
     <Compile Include="ViewModel\UpdateShowTimeCollectionViewModel.cs" />
     <Compile Include="ViewModel\EpisodeViewModel.cs" />
     <Compile Include="Services\EpisodeThumbnailProvider.cs" />
-    <Compile Include="ViewModel\ManageShowsViewModel.cs" />
     <Compile Include="ViewModel\SeasonEpisodesIconListViewModel.cs" />
     <Compile Include="ViewModel\TVShowListViewModel.cs" />
     <Compile Include="ViewModel\SeasonEpisodesListViewModel.cs" />
