@@ -4,14 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
+             xmlns:bcc="clr-namespace:ShowTime.View.Controls.BreadCrumbControl"
              d:DesignHeight="50" d:DesignWidth="300">
     <Grid>
         <!-- TODO: Make this bind to a list of commands, and display as buttons using a items template.-->
         <!-- The View Model should provide the list of available commands based on the selected view model. -->
-        
-        <!--<Button Command="{Binding HomeCommand}">Home</Button>-->
-        
-        <ItemsControl HorizontalAlignment="Stretch" ItemsSource="{Binding CommandList}">
+
+        <bcc:BreadCrumbControl x:Name="ctlBreadCrumb" DataContext="{Binding BreadCrumbViewModel}"></bcc:BreadCrumbControl>
+
+        <!--<ItemsControl HorizontalAlignment="Stretch" ItemsSource="{Binding CommandList}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal"/>
@@ -25,6 +26,6 @@
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        </ItemsControl>-->
     </Grid>
 </UserControl>

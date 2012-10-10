@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ShowTime.Model;
 using System.Windows.Input;
+using ShowTime.Services.CloseActions;
 
 namespace ShowTime.ViewModel
 {
@@ -21,6 +22,7 @@ namespace ShowTime.ViewModel
         public string EpisodeThumbnail { get; set; }
 
         public ICommand NavigateToFileCommand { get; private set; }
+        public ICommand PlayCommand { get; private set; }
 
         public EpisodePreviewViewModel(IDataStore dataStore, EpisodeId episodeId, Services.IEpisodeThumbnailFilenameProvider thumbnailProvider)
         {
@@ -37,7 +39,30 @@ namespace ShowTime.ViewModel
             {
                 System.Diagnostics.Process.Start("explorer.exe", @"/select, " + episode.Filename);
             });
+
+            PlayCommand = new ViewModel.Commands.RelayCommand(param =>
+            {
+                PlayEpisode();
+            });
         }
 
+        private VideoPlayRequestHandler playHandler;
+
+        private void PlayEpisode()
+        {
+            if (playHandler == null)
+            {
+                playHandler = new VideoPlayRequestHandler(
+                    new VideoPlayerController(),
+                    dataStore,
+                    new EpisodeCloseActionsCalculatorProvider(),
+                    new EpisodeCloseActionsExecutor(dataStore)
+                    );
+            }
+
+            playHandler.PlayVideo(
+                new VideoPlayRequest(episode.Id)
+            );
+        }
     }
 }

@@ -11,7 +11,9 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Image Grid.Column="0" Source="{Binding EpisodeThumbnail}" />
+        <StackPanel Grid.Column="0" Orientation="Vertical">
+            <Image Source="{Binding EpisodeThumbnail}" />
+        </StackPanel>
         <StackPanel Grid.Column="1">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Grid.Row="0">Show Name:</TextBlock>
@@ -41,6 +43,7 @@
                     </Hyperlink>
                 </TextBlock>
             </StackPanel>
+            <Button Command="{Binding PlayCommand}">Play</Button>
         </StackPanel>
     </Grid>
 </UserControl>

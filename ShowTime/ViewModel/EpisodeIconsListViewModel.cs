@@ -64,7 +64,7 @@ namespace ShowTime.ViewModel
                     episode=>
                     new MenuItemCommand(
                         episode.Number + ". " + episode.Title,
-                        "../Resources/tv.jpg",
+                        MenuItemCommand.BuildImageFromFile(thumbnailProvider.GetThumbnailFilenameForEpisode(episode).ActualFilename),
                         episode.Id,
                         null,
                         null

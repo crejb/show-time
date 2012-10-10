@@ -32,7 +32,7 @@ namespace ShowTime.ViewModel
                     season=>
                     new MenuItemCommand(
                         "Season " + season.Number,
-                        "../Resources/tv.jpg",
+                        MenuItemCommand.BuildImageFromResource("../Resources/tv.jpg"),
                         season.Id,
                         null,
                         null

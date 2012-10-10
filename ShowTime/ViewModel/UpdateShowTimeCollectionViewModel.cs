@@ -7,6 +7,7 @@ using ShowTime.Services.Providers;
 using System.Windows.Input;
 using ShowTime.ViewModel.Commands;
 using System.Collections.ObjectModel;
+using ShowTime.Services;
 
 namespace ShowTime.ViewModel
 {
@@ -14,6 +15,7 @@ namespace ShowTime.ViewModel
     {
         private IDataStore dataStore;
         private readonly ITVShowDiscovererProvider discovererProvider;
+        private IEpisodeThumbnailGenerator thumbnailGenerator;
 
         private ObservableCollection<DiscoveredEpisodeViewModel> discoveredEpisodes;
         public ObservableCollection<DiscoveredEpisodeViewModel> DiscoveredEpisodes
@@ -48,10 +50,11 @@ namespace ShowTime.ViewModel
             get { return applyCommand; }
         }
 
-        public UpdateShowTimeCollectionViewModel(IDataStore dataStore, ITVShowDiscovererProvider discovererProvider)
+        public UpdateShowTimeCollectionViewModel(IDataStore dataStore, ITVShowDiscovererProvider discovererProvider, IEpisodeThumbnailGenerator thumbnailGenerator)
         {
             this.dataStore = dataStore;
             this.discovererProvider = discovererProvider;
+            this.thumbnailGenerator = thumbnailGenerator;
 
             searchDirectoryCommand = new RelayCommand(
                         param => this.SearchDirectoryForNewEpisodes(),
@@ -85,7 +88,6 @@ namespace ShowTime.ViewModel
             base.OnPropertyChanged("DiscoveredEpisodes");
         }
 
-
         public bool CanApply
         {
             get
@@ -97,29 +99,65 @@ namespace ShowTime.ViewModel
         private void InsertNewEpisodesIntoRepository()
         {
             if (!CanApply)
-            {
                 throw new InvalidOperationException();
-            }
 
             var selectedNewEpisodes = discoveredEpisodes.Where(e => e.IsSelected);
 
+            var newShows = GetNewTVShows(selectedNewEpisodes);
+            SaveNewTVShowsInRepository(newShows);
+
+            var newSeasons = GetNewSeasons(selectedNewEpisodes);
+            SaveNewSeasonsInRepository(newSeasons);
+
+            SaveNewEpisodesInRepository(selectedNewEpisodes);
+            GenerateThumbnailsForNewEpisodes(selectedNewEpisodes);
+        }
+
+        private IEnumerable<TVShow> GetNewTVShows(IEnumerable<DiscoveredEpisodeViewModel> selectedNewEpisodes)
+        {
             var newShows = selectedNewEpisodes.Where(
                 episode => episode.IsShowNew).Select(episode => new TVShow(episode.ShowName, episode.Description)).Distinct();
-            
-            var newSeasons = selectedNewEpisodes.Where(
-                episode => episode.IsSeasonNew).Select(episode => new Season(episode.TVShowId, episode.SeasonNumber)).Distinct();
+            return newShows;
+        }
 
+        private void SaveNewTVShowsInRepository(IEnumerable<TVShow> newShows)
+        {
             foreach (var show in newShows)
                 dataStore.TVShowRepository.Insert(show);
             dataStore.TVShowRepository.Save();
+        }
 
+        private IEnumerable<Season> GetNewSeasons(IEnumerable<DiscoveredEpisodeViewModel> selectedNewEpisodes)
+        {
+            var newSeasons = selectedNewEpisodes.Where(
+                episode => episode.IsSeasonNew).Select(episode => new Season(episode.TVShowId, episode.SeasonNumber)).Distinct();
+            return newSeasons;
+        }
+
+        private void SaveNewSeasonsInRepository(IEnumerable<Season> newSeasons)
+        {
             foreach (var season in newSeasons)
                 dataStore.SeasonRepository.Insert(season);
             dataStore.SeasonRepository.Save();
+        }
 
-            foreach (var episode in selectedNewEpisodes)
-                dataStore.EpisodeRepository.Insert(episode.BuildEpisode());
+        private void SaveNewEpisodesInRepository(IEnumerable<DiscoveredEpisodeViewModel> selectedNewEpisodes)
+        {
+            foreach (var episodeVM in selectedNewEpisodes)
+            {
+                var episode = episodeVM.BuildEpisode();
+                dataStore.EpisodeRepository.Insert(episode);
+            }
             dataStore.EpisodeRepository.Save();
+        }
+
+        private void GenerateThumbnailsForNewEpisodes(IEnumerable<DiscoveredEpisodeViewModel> selectedNewEpisodes)
+        {
+            foreach (var episodeVM in selectedNewEpisodes)
+            {
+                var episode = episodeVM.BuildEpisode();
+                thumbnailGenerator.GenerateThumbnailForEpisode(episode);
+            }
         }
     }
 

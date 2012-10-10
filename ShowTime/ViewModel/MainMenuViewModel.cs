@@ -23,7 +23,7 @@ namespace ShowTime.ViewModel
             {
                 new MenuItemCommand(
                     "Watch TV Shows",
-                    "../Resources/tv.jpg",
+                    MenuItemCommand.BuildImageFromResource("../Resources/tv.jpg"),
                     null,
                     null,
                     new RelayCommand(
@@ -32,7 +32,7 @@ namespace ShowTime.ViewModel
                 ),
                 new MenuItemCommand(
                     "Browse Database",
-                    "../Resources/tv.jpg",
+                    MenuItemCommand.BuildImageFromResource("../Resources/tv.jpg"),
                     null,
                     null,
                     new RelayCommand(
@@ -41,7 +41,7 @@ namespace ShowTime.ViewModel
                 ),
                 new MenuItemCommand(
                     "Manage TV Shows",
-                    "../Resources/folder.jpg",
+                    MenuItemCommand.BuildImageFromResource("../Resources/folder.jpg"),
                     null,
                     null,
                     new RelayCommand(

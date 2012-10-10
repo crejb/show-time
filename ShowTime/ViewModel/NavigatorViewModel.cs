@@ -6,6 +6,7 @@ using System.Windows.Input;
 using ShowTime.ViewModel.Commands;
 using System.Collections.ObjectModel;
 using ShowTime.Model;
+using ShowTime.View.Controls.BreadCrumbControl;
 
 namespace ShowTime.ViewModel
 {
@@ -28,6 +29,20 @@ namespace ShowTime.ViewModel
             }
         }
 
+        private BreadCrumbModel breadCrumbViewModel;
+        public BreadCrumbModel BreadCrumbViewModel
+        {
+            get { return breadCrumbViewModel; }
+            set
+            {
+                if (breadCrumbViewModel == value)
+                    return;
+
+                breadCrumbViewModel = value;
+                base.OnPropertyChanged("BreadCrumbViewModel");
+            }
+        }
+
         private readonly IDataStore dataStore;
 
         private MainMenuViewModel mainMenuViewModel;
@@ -38,12 +53,12 @@ namespace ShowTime.ViewModel
         private CommandViewModel homeCommand;
         private CommandViewModel updateCommand;
         private CommandViewModel showsCommand;
-        private Services.IEpisodeThumbnailFilenameProvider episodeThumbnailProvider;
+        private Services.IEpisodeThumbnailGenerator episodeThumbnailGenerator;
 
-        public NavigatorViewModel(IDataStore dataStore, Services.IEpisodeThumbnailFilenameProvider episodeThumbnailProvider, Services.Providers.ITVShowDiscovererProvider discovererProvider)
+        public NavigatorViewModel(IDataStore dataStore, Services.IEpisodeThumbnailGenerator episodeThumbnailGenerator, Services.Providers.ITVShowDiscovererProvider discovererProvider)
         {
             this.dataStore = dataStore;
-            this.episodeThumbnailProvider = episodeThumbnailProvider;
+            this.episodeThumbnailGenerator = episodeThumbnailGenerator;
 
             homeCommand = new CommandViewModel("Home", new RelayCommand(param => OnHomeCommandExecuted()));
             updateCommand = new CommandViewModel("Update Shows", new RelayCommand(param => OnUpdateCommandExecuted()));
@@ -58,15 +73,39 @@ namespace ShowTime.ViewModel
             tvShowListViewModel.TvShowSelected += tvShowListViewModel_TvShowSelected;
 
 
-            browseAllShowsViewModel = new BrowseAllShowsViewModel(dataStore, episodeThumbnailProvider);
-            updateDataViewModel = new UpdateShowTimeCollectionViewModel(dataStore, discovererProvider);
+            browseAllShowsViewModel = new BrowseAllShowsViewModel(dataStore, episodeThumbnailGenerator.FilenameProvider);
+            updateDataViewModel = new UpdateShowTimeCollectionViewModel(dataStore, discovererProvider, episodeThumbnailGenerator);
 
             commandList = new ObservableCollection<CommandViewModel> { homeCommand, showsCommand, updateCommand };
+
+
+            breadCrumbViewModel = new BreadCrumbModel();
+            breadCrumbViewModel.BreadCrumbItems = new System.Collections.ObjectModel.ObservableCollection<BreadCrumbItem>
+            {
+                new BreadCrumbHeadItem("Home", new RelayCommand(param => HomeItemClicked())),
+                new BreadCrumbItem("Shows", new RelayCommand(param => ShowsItemClicked())),
+                new BreadCrumbItem("Really really long TV show name", new RelayCommand(param => SeasonsItemClicked())),
+                new BreadCrumbTailItem("Season 1", new RelayCommand(param => HeadItemClicked())),
+            };
 
             OnNavigateToViewRequested(mainMenuViewModel);
         }
 
+        private void HeadItemClicked()
+        {
+        }
 
+        private void SeasonsItemClicked()
+        {
+        }
+
+        private void ShowsItemClicked()
+        {
+        }
+
+        private void HomeItemClicked()
+        {
+        }
 
 
         private void mainMenuViewModel_WatchShowsSelected()
@@ -83,7 +122,7 @@ namespace ShowTime.ViewModel
 
         private void seasonsListViewModel_SeasonSelected(SeasonId seasonId)
         {
-            var episodesListViewModel = new EpisodeIconsListViewModel(dataStore, seasonId, episodeThumbnailProvider);
+            var episodesListViewModel = new EpisodeIconsListViewModel(dataStore, seasonId, episodeThumbnailGenerator.FilenameProvider);
             episodesListViewModel.EpisodeSelected += episodesListViewModel_EpisodeSelected;
             OnNavigateToViewRequested(episodesListViewModel);
         }

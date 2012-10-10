@@ -29,7 +29,7 @@ namespace ShowTime.ViewModel
                 show=>
                 new MenuItemCommand(
                     show.Name,
-                    "../Resources/tv.jpg",
+                    MenuItemCommand.BuildImageFromResource("../Resources/tv.jpg"),
                     show.Id,
                     null, null
                 ));

@@ -1,0 +1,50 @@
+TODO:
+ - Player control improvements
+  -- Fullscreen
+  -- Volume controls
+  -- Time controls
+  -- Popup/fade away controls like VLC
+ - Bookmark repo and persister implement
+ - Mark as watched (add watched repository)
+ - Show watched/bookmark icons on video thumbnails
+ - Navigation control/breadcrumb stack
+ - Make Episode adding and thumbnail generation asynchronous
+ - Change to abstract provider pattern
+ - Delete functionality
+ - Find missing data functionality
+ - Crash on duplicate add
+ - Crash on duplicate play- sort out creation of video player controller
+
+ 
+ Episode preview controls
+ actions available when there is no bookmark
+ -Play
+ 
+ actions available when there is a bookmark
+ -Play from bookmark
+ -Play from start
+ -clear bookmark
+ 
+ After playing
+ -if seek position at exit within 10 seconds of the end
+  -mark as watched
+  -clear bookmark
+ -if seek position at exit within 10 seconds of the start
+  -don't add a bookmark
+-if video was watched for less than 10 seconds (time between when user opened the video and when they closed it, not the play position)
+  -don't add a bookmark
+  -don't mark as watched
+
+
+Player Control:
+-Wraps the media control
+-Dependency properties for:
+--Filename
+--VideoLength
+--SeekPosition
+--Close Actions
+
+Player Window
+-Has a Player Control on the UI
+-PlayerViewModel is the data context
+-Bind dependency properties of control to ViewModel properties

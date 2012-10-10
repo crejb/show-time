@@ -10,9 +10,9 @@ namespace ShowTime.Model
         public BookmarkId Id{ get; private set; }
 
         public EpisodeId EpisodeId { get; private set; }
-        public DateTime Time { get; private set; }
+        public TimeSpan Time { get; private set; }
 
-        public Bookmark(EpisodeId episodeId, DateTime time)
+        public Bookmark(EpisodeId episodeId, TimeSpan time)
         {
             this.Id = new BookmarkId();
             this.EpisodeId = episodeId;

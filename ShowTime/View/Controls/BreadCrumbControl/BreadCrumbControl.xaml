@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="ShowTime.View.Controls.BreadCrumbControl.BreadCrumbControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d"
+             xmlns:local="clr-namespace:ShowTime.View.Controls.BreadCrumbControl"
+             d:DesignHeight="50" d:DesignWidth="300">
+    <Grid>
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type local:BreadCrumbItem}">
+                <local:BreadCrumbItemControl Background="LightGreen" Content="{Binding Text}" Margin="0,0,-10,0" />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type local:BreadCrumbHeadItem}">
+                <local:BreadCrumbItemControl HeadItem="True" Background="LightBlue" Content="{Binding Text}" Margin="0,0,-10,0" />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type local:BreadCrumbTailItem}">
+                <local:BreadCrumbItemControl TailItem="True" Background="LightBlue" Content="{Binding Text}" Margin="0,0,-10,0" />
+            </DataTemplate>
+        </Grid.Resources>
+        <ItemsControl FlowDirection="LeftToRight" UseLayoutRounding="True" ItemsSource="{Binding BreadCrumbItems}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </Grid>
+</UserControl>

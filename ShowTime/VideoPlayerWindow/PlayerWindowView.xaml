@@ -1,0 +1,15 @@
+﻿<Window x:Class="ShowTime.PlayerWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:ShowTime.View.Controls"
+        Title="PlayerUI" Height="300" Width="300">
+    <Grid>
+        <Controls:VideoPlayerControl x:Name="ctlVideoPlayer"
+                                     Filename="{Binding VideoFilename}" 
+                                     SeekPosition="{Binding SeekPosition, Mode=TwoWay}" 
+                                     VideoLength="{Binding VideoLength, Mode=OneWayToSource}">
+                                     <!--VideoCompleteCommand="{Binding VideoCompleteCommand}">-->
+            
+        </Controls:VideoPlayerControl>
+    </Grid>
+</Window>

@@ -59,6 +59,12 @@
     <Compile Include="DataLoading\DirectoryParsingDataLoader.cs" />
     <Compile Include="DataLoading\HardcodedDataLoader.cs" />
     <Compile Include="DataLoading\IDataLoader.cs" />
+    <Compile Include="Services\CloseActions\EpisodeCloseActionsCalculator.cs" />
+    <Compile Include="Services\CloseActions\EpisodeCloseActionsExecutor.cs" />
+    <Compile Include="VideoPlayerWindow\IPlayer.cs" />
+    <Compile Include="VideoPlayerWindow\PlayerWindowView.xaml.cs">
+      <DependentUpon>PlayerWindowView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Repositories\BaseDictionaryRepository.cs" />
     <Compile Include="Repositories\XmlRepositoryPersister.cs" />
     <Compile Include="Repositories\IDataStore.cs" />
@@ -86,6 +92,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <Compile Include="VideoPlayerWindow\PlayerWindowViewModel.cs" />
+    <Compile Include="VideoPlayRequestHandler.cs" />
     <Compile Include="ViewModel\BrowseAllShowsViewModel.cs" />
     <Compile Include="ViewModel\Commands\CommandViewModel.cs" />
     <Compile Include="ViewModel\Commands\MenuItemCommand.cs" />
@@ -108,6 +116,16 @@
     <Compile Include="View\BrowseAllShowsView.xaml.cs">
       <DependentUpon>BrowseAllShowsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VideoPlayerWindow\VideoPlayerControl.xaml.cs">
+      <DependentUpon>VideoPlayerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\BreadCrumbControl\BreadCrumbControl.xaml.cs">
+      <DependentUpon>BreadCrumbControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\BreadCrumbControl\BreadCrumbItemControl.xaml.cs">
+      <DependentUpon>BreadCrumbItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\BreadCrumbControl\BreadCrumbModel.cs" />
     <Compile Include="View\EpisodeIconsListView.xaml.cs">
       <DependentUpon>EpisodeIconsListView.xaml</DependentUpon>
     </Compile>
@@ -163,7 +181,23 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="VideoPlayerWindow\PlayerWindowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\BrowseAllShowsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VideoPlayerWindow\VideoPlayerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\BreadCrumbControl\BreadCrumbControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\BreadCrumbControl\BreadCrumbItemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -256,6 +290,7 @@
     <Resource Include="Resources\folder.jpg" />
     <Resource Include="Resources\tv.jpg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

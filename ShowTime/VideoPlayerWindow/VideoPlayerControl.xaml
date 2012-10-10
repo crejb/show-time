@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="ShowTime.View.Controls.VideoPlayerControl"
+             Name="ThisVideoPlayerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="Black" x:Name="ctrlMediaPanel">
+            <MediaElement x:Name="ctrlMedia" LoadedBehavior="Manual" ScrubbingEnabled="True" MouseUp="ctrlMedia_MouseUp">
+            </MediaElement>
+        </Grid>
+        <StackPanel Grid.Row="1">
+            <DockPanel>
+                <TextBox x:Name="ctrlFilename" Text="{Binding Filename, ElementName=ThisVideoPlayerControl}"></TextBox>
+            </DockPanel>
+            <DockPanel>
+                <Slider x:Name="ctrlTimeSlider" 
+                        IsMoveToPointEnabled="true"
+                        ValueChanged="ctrlTimeSlider_ValueChanged" 
+                        Thumb.DragStarted="ctrlTimeSlider_DragStarted"
+                        Thumb.DragCompleted="ctrlTimeSlider_DragCompleted"></Slider>
+            </DockPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="ctrlPlayButton" Content="Play" Click="ctrlPlayButton_Click" />
+                <Button x:Name="ctrlPauseButton" Content="Pause" Click="ctrlPauseButton_Click" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

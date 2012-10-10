@@ -11,13 +11,8 @@
     
     <Grid>
         <Border Background="Red" BorderBrush="Blue" BorderThickness="4">
-            <!--<StackPanel>
-                <view:BrowseAllShowsView x:Name="BrowseAllView"></view:BrowseAllShowsView>
-                <view:UpdateShowTimeCollectionView x:Name="UpdateView"></view:UpdateShowTimeCollectionView>
-                <view:MainMenuView x:Name="UpdateView"></view:MainMenuView>
-            </StackPanel>-->
             <DockPanel>
-                <view:NavigatorView x:Name="ctrlNavigator" Height="25" DockPanel.Dock="Top"></view:NavigatorView>
+                <view:NavigatorView x:Name="ctrlNavigator" DockPanel.Dock="Top"></view:NavigatorView>
                 <Grid Background="Bisque">
                     <ContentControl Content="{Binding CurrentViewModel}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="ctrlContentPanel"></ContentControl>
                 </Grid>

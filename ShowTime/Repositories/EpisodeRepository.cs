@@ -38,7 +38,6 @@ namespace ShowTime.Repositories
 
         protected override Episode LoadEntity(XmlElement element)
         {
-            //var tvShowId = XmlPersistenceUtilities.LoadTVShowId(element);
             var seasonId = XmlPersistenceUtilities.LoadSeasonId(element);
             var tvShowId = seasonId.ShowId;
             var number = int.Parse(element.SelectSingleNode("Number").InnerText);

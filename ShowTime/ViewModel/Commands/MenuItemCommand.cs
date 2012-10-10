@@ -10,6 +10,24 @@ namespace ShowTime.ViewModel.Commands
 {
     public class MenuItemCommand
     {
+        public static ImageSource BuildImageFromResource(string imageUri)
+        {
+            BitmapImage img = new BitmapImage();
+            img.BeginInit();
+            img.UriSource = new Uri(imageUri, UriKind.Relative);
+            img.EndInit();
+            return img;
+        }
+
+        public static ImageSource BuildImageFromFile(string imageUri)
+        {
+            BitmapImage img = new BitmapImage();
+            img.BeginInit();
+            img.UriSource = new Uri(imageUri);
+            img.EndInit();
+            return img;
+        }
+
         public ImageSource MenuItemImage { get; private set; }
         public string MenuItemText { get; private set; }
         public object Tag { get; private set; }
@@ -17,23 +35,14 @@ namespace ShowTime.ViewModel.Commands
         public ICommand SelectedCommand { get; private set; }
         public ICommand ConfirmedCommand { get; private set; }
 
-        public MenuItemCommand(string menuItemText, string imageUri, object tag, ICommand selectedCommand, ICommand confirmedCommand)
+        public MenuItemCommand(string menuItemText, ImageSource image, object tag, ICommand selectedCommand, ICommand confirmedCommand)
         {
             MenuItemText = menuItemText;
             Tag = tag;
-            BuildImage(imageUri);
+            MenuItemImage = image;
 
             SelectedCommand = selectedCommand;
             ConfirmedCommand = confirmedCommand;
-        }
-
-        private void BuildImage(string imageUri)
-        {
-            BitmapImage img = new BitmapImage();
-            img.BeginInit();
-            img.UriSource = new Uri(imageUri, UriKind.Relative);
-            img.EndInit();
-            MenuItemImage = img;
         }
 
         public void InvokeSelectedCommand()

@@ -32,14 +32,9 @@ namespace ShowTime
             MainWindow window = new MainWindow();
 
             dataStore = CreateDataStore();
-            LoadInitialData(dataStore);
 
             episodeThumbnailFilenameProvider = new MockEpisodeThumbnailFilenameProvider();
             episodeThumbnailGenerator = new FFMpegEpisodeThumbnailGenerator(episodeThumbnailFilenameProvider);
-
-            //// Create the ViewModel to which the main window binds.
-            //BrowseAllShowsViewModel browseAllShowsViewModel = new BrowseAllShowsViewModel(dataStore, episodeThumbnailFilenameProvider);
-            //window.BrowseAllView.DataContext = browseAllShowsViewModel;
 
             var directoryScannerProvider = new DirectoryScannerProvider(new EpisodeDetailsBuilder(
                     new ShowTime.Services.EpisodeDetailsBuilders.ShowAttributeBuilder(),
@@ -47,8 +42,7 @@ namespace ShowTime
                     new ShowTime.Services.EpisodeDetailsBuilders.EpisodeAttributeBuilder()));
             var discovererProvider = new TVShowDiscovererProvider(dataStore, directoryScannerProvider);
 
-            //window.UpdateView.DataContext = new MainMenuViewModel(); // new UpdateShowTimeCollectionViewModel(dataStore, discovererProvider);
-            NavigatorViewModel navigator = new NavigatorViewModel(dataStore, episodeThumbnailFilenameProvider, discovererProvider);
+            NavigatorViewModel navigator = new NavigatorViewModel(dataStore, episodeThumbnailGenerator, discovererProvider);
             MainWindowViewModel mainViewModel = new MainWindowViewModel(navigator);
             window.DataContext = mainViewModel;
             window.ctrlNavigator.DataContext = navigator;
@@ -61,8 +55,9 @@ namespace ShowTime
             var tvShowRepo = new TVShowRepository(CreateTVShowRepositoryPersister());
             var seasonRepo = new SeasonRepository(CreateSeasonRepositoryPersister());
             var episodeRepo = new EpisodeRepository(CreateEpisodeRepositoryPersister());
+            var bookmarkRepo = new BookmarkRepository(CreateBookmarkRepositoryPersister());
 
-            return new ShowTimeDataStore(tvShowRepo, seasonRepo, episodeRepo);
+            return new ShowTimeDataStore(tvShowRepo, seasonRepo, episodeRepo, bookmarkRepo);
         }
 
         private static IRepositoryPersister<EpisodeId, Episode> CreateEpisodeRepositoryPersister()
@@ -80,21 +75,9 @@ namespace ShowTime
             return new TVShowRepositoryPersister(System.IO.Path.Combine(SHOWTIME_DATA_DIRECTORY, "Data", "Repository_TVShow.xml"));
         }
 
-        private void LoadInitialData(IDataStore dataManager)
+        private static IRepositoryPersister<BookmarkId, Bookmark> CreateBookmarkRepositoryPersister()
         {
-            var dataLoader = CreateDataLoader();
-            dataLoader.LoadData(dataManager);
-        }
-
-        private IDataLoader CreateDataLoader()
-        {
-            //return new HardcodedDataLoader();
-            return new DirectoryParsingDataLoader(@"C:\Users\Chris\Videos\Empty",
-                new EpisodeDetailsBuilder(
-                    new ShowTime.Services.EpisodeDetailsBuilders.ShowAttributeBuilder(),
-                    new ShowTime.Services.EpisodeDetailsBuilders.SeasonAttributeBuilder(),
-                    new ShowTime.Services.EpisodeDetailsBuilders.EpisodeAttributeBuilder()));
+            return new BookmarkRepositoryPersister(System.IO.Path.Combine(SHOWTIME_DATA_DIRECTORY, "Data", "Repository_Bookmark.xml"));
         }
     }
-
 }
