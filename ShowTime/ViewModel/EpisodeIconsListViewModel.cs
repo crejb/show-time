@@ -62,12 +62,13 @@ namespace ShowTime.ViewModel
                 .OrderBy(episode => episode.Number)
                 .Select(
                     episode=>
-                    new MenuItemCommand(
-                        episode.Number + ". " + episode.Title,
-                        MenuItemCommand.BuildImageFromFile(thumbnailProvider.GetThumbnailFilenameForEpisode(episode).ActualFilename),
-                        episode.Id,
+                    new EpisodeIconMenuItemCommand(
+                        episode,
+                        thumbnailProvider,
                         null,
-                        null
+                        null,
+                        dataStore.BookmarkRepository.Find(new BookmarkId(episode.Id)),
+                        dataStore.LastWatchedRepository.Query(entry => entry.EpisodeId.Equals(episode.Id)).FirstOrDefault()
                     ));
         }
 
@@ -78,6 +79,34 @@ namespace ShowTime.ViewModel
             var handler = EpisodeSelected;
             if (handler != null)
                 handler(episodeId);
+        }
+    }
+
+    public class EpisodeIconMenuItemCommand : MenuItemCommand
+    {
+        public bool HasBookmark { get; private set; }
+        public string LastWatchedDescription { get; private set; }
+
+        public EpisodeIconMenuItemCommand(
+            Episode episode,
+            Services.IEpisodeThumbnailFilenameProvider thumbnailProvider,
+            ICommand selectedCommand, 
+            ICommand confirmedCommand,
+            Bookmark bookmark = null,
+            LastWatchedEntry lastWatchedEntry = null
+            )
+            : base(
+                    episode.Number + ". " + episode.Title,
+                    MenuItemCommand.BuildImageFromFile(thumbnailProvider.GetThumbnailFilenameForEpisode(episode).ActualFilename),
+                    episode.Id, selectedCommand, confirmedCommand)
+        {
+            HasBookmark = bookmark != null;
+
+            if (lastWatchedEntry != null)
+            {
+                var dateTimeStringConverter = new Services.DateTimeToHumanReadableFormatConverter();
+                LastWatchedDescription = dateTimeStringConverter.ConvertDateTimeToHumanReadableFormat(lastWatchedEntry.Time);
+            }
         }
     }
 }

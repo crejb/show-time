@@ -56,8 +56,9 @@ namespace ShowTime
             var seasonRepo = new SeasonRepository(CreateSeasonRepositoryPersister());
             var episodeRepo = new EpisodeRepository(CreateEpisodeRepositoryPersister());
             var bookmarkRepo = new BookmarkRepository(CreateBookmarkRepositoryPersister());
+            var lastWatchedRepo = new LastWatchedRepository(CreateLastWatchedRepositoryPersister());
 
-            return new ShowTimeDataStore(tvShowRepo, seasonRepo, episodeRepo, bookmarkRepo);
+            return new ShowTimeDataStore(tvShowRepo, seasonRepo, episodeRepo, bookmarkRepo, lastWatchedRepo);
         }
 
         private static IRepositoryPersister<EpisodeId, Episode> CreateEpisodeRepositoryPersister()
@@ -78,6 +79,11 @@ namespace ShowTime
         private static IRepositoryPersister<BookmarkId, Bookmark> CreateBookmarkRepositoryPersister()
         {
             return new BookmarkRepositoryPersister(System.IO.Path.Combine(SHOWTIME_DATA_DIRECTORY, "Data", "Repository_Bookmark.xml"));
+        }
+
+        private static IRepositoryPersister<LastWatchedEntryId, LastWatchedEntry> CreateLastWatchedRepositoryPersister()
+        {
+            return new LastWatchedRepositoryPersister(System.IO.Path.Combine(SHOWTIME_DATA_DIRECTORY, "Data", "Repository_LastWatched.xml"));
         }
     }
 }

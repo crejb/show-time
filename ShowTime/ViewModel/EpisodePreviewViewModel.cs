@@ -18,11 +18,15 @@ namespace ShowTime.ViewModel
         public int EpisodeNumber { get { return episode.Number; } }
         public string Filename { get { return episode.Title; } }
         public int ViewCount { get; set; }
-        public DateTime LastWatched { get; set; }
+        public DateTime? LastWatchedTime { get; set; }
         public string EpisodeThumbnail { get; set; }
 
         public ICommand NavigateToFileCommand { get; private set; }
         public ICommand PlayCommand { get; private set; }
+
+        private readonly Bookmark bookmark;
+        public bool HasBookmark { get { return bookmark != null; } }
+        public TimeSpan? BookmarkTime { get { return HasBookmark ? bookmark.Time : (TimeSpan?)null; } }
 
         public EpisodePreviewViewModel(IDataStore dataStore, EpisodeId episodeId, Services.IEpisodeThumbnailFilenameProvider thumbnailProvider)
         {
@@ -30,10 +34,24 @@ namespace ShowTime.ViewModel
             this.episode = dataStore.EpisodeRepository.Find(episodeId);
 
             EpisodeThumbnail = thumbnailProvider.GetThumbnailFilenameForEpisode(episode).ActualFilename;
-            //TODO: LastWatchedRepo
-            //TODO: BookmarkRepo
-            ViewCount = 2;
-            LastWatched = DateTime.Now;
+
+            // SHould be either 1 or 0 bookmarks for the episode
+            this.bookmark = dataStore.BookmarkRepository.Query(bk => bk.EpisodeId.Equals(episodeId)).
+                FirstOrDefault();
+
+            var lastWatchedEntries = dataStore.LastWatchedRepository.Query(lwe => lwe.EpisodeId.Equals(episodeId));
+
+
+            if (lastWatchedEntries.Any())
+            {
+                ViewCount = lastWatchedEntries.Count();
+                LastWatchedTime = lastWatchedEntries.Last().Time;
+            }
+            else
+            {
+                ViewCount = 0;
+                LastWatchedTime = null;
+            }
 
             NavigateToFileCommand = new ViewModel.Commands.RelayCommand(param =>
             {
@@ -61,7 +79,7 @@ namespace ShowTime.ViewModel
             }
 
             playHandler.PlayVideo(
-                new VideoPlayRequest(episode.Id)
+                new VideoPlayRequest(episode.Id, bookmark)
             );
         }
     }

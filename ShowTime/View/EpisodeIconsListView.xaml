@@ -9,11 +9,53 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
+        <Grid.Resources>
+            <Style x:Key="LabelStyle" TargetType="Label">
+                <Setter Property="Foreground" Value="Red"></Setter>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=HasBookmark}" Value="true">
+                        <Setter Property="Foreground" Value="Blue"></Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="BookmarkImageVisibleStyle" TargetType="Image">
+                <Setter Property="Visibility" Value="Hidden"></Setter>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=HasBookmark}" Value="true">
+                        <Setter Property="Visibility" Value="Visible"></Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="WatchedImageVisibleStyle" TargetType="Image">
+                <Setter Property="Visibility" Value="Hidden"></Setter>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=HasBookmark}" Value="true">
+                        <Setter Property="Visibility" Value="Visible"></Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <view:IconListPanel Grid.Row="0" x:Name="ctrlEpisodeList" MenuItemCommands="{Binding MenuItemCommands}" ItemSelected="{Binding SelectEpisodeCommand}" />
+        <view:IconListPanel Grid.Row="0" x:Name="ctrlEpisodeList" MenuItemCommands="{Binding MenuItemCommands}" ItemSelected="{Binding SelectEpisodeCommand}" >
+            <view:IconListPanel.IconContent>
+                <DataTemplate>
+                    <Grid>
+                        <StackPanel Orientation="Vertical">
+                            <Image Width="120" Height="70" Source="{Binding Path=MenuItemImage}"></Image>
+                            <Label Content="{Binding Path=MenuItemText}" Style="{StaticResource LabelStyle}" />
+                            <!-- TODO: If Bookmark, display an icon.  If has LastWatchedDescription, display this somehow. -->
+                        </StackPanel>
+
+                        <Image Source="../Resources/eye.png" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource WatchedImageVisibleStyle}"></Image>
+                        <Image Source="../Resources/star.png" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,20,0,0" Style="{StaticResource BookmarkImageVisibleStyle}"></Image>
+
+                    </Grid>
+                </DataTemplate>
+            </view:IconListPanel.IconContent>
+        </view:IconListPanel>
         <view:EpisodePreviewView Grid.Row="1" DataContext="{Binding SelectedEpisodePreviewViewModel}"></view:EpisodePreviewView>
     </Grid>
 </UserControl>

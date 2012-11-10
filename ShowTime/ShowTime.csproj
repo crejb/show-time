@@ -59,8 +59,10 @@
     <Compile Include="DataLoading\DirectoryParsingDataLoader.cs" />
     <Compile Include="DataLoading\HardcodedDataLoader.cs" />
     <Compile Include="DataLoading\IDataLoader.cs" />
+    <Compile Include="Repositories\LastWatchedRepository.cs" />
     <Compile Include="Services\CloseActions\EpisodeCloseActionsCalculator.cs" />
     <Compile Include="Services\CloseActions\EpisodeCloseActionsExecutor.cs" />
+    <Compile Include="Services\DateTimeToHumanReadableFormatConverter.cs" />
     <Compile Include="VideoPlayerWindow\IPlayer.cs" />
     <Compile Include="VideoPlayerWindow\PlayerWindowView.xaml.cs">
       <DependentUpon>PlayerWindowView.xaml</DependentUpon>
@@ -290,7 +292,10 @@
     <Resource Include="Resources\folder.jpg" />
     <Resource Include="Resources\tv.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\eye.png" />
+    <Resource Include="Resources\star.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

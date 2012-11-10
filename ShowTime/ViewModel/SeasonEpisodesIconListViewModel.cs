@@ -33,7 +33,12 @@ namespace ShowTime.ViewModel
             {
                 return dataManager.EpisodeRepository
                     .Query(ep => ep.SeasonId.Equals(season.Id))
-                    .Select(e => new SeasonEpisodesIconListViewModel_EpisodeIconViewModel(e, thumbnailProvider));
+                    .Select(e => new SeasonEpisodesIconListViewModel_EpisodeIconViewModel(
+                        e, 
+                        thumbnailProvider, 
+                        dataManager.BookmarkRepository.Find(new BookmarkId(e.Id)),
+                        dataManager.LastWatchedRepository.Query(entry => entry.EpisodeId.Equals(e.Id)).FirstOrDefault()
+                        ));
             }
         }
 
@@ -70,6 +75,8 @@ namespace ShowTime.ViewModel
     public class SeasonEpisodesIconListViewModel_EpisodeIconViewModel : ViewModelBase
     {
         public readonly Episode Episode;
+        public readonly Bookmark Bookmark;
+        public readonly LastWatchedEntry LastWatchedEntry;
 
         public int Number
         {
@@ -96,11 +103,31 @@ namespace ShowTime.ViewModel
             get; private set;
         }
 
-        public SeasonEpisodesIconListViewModel_EpisodeIconViewModel(Episode episode, IEpisodeThumbnailFilenameProvider thumbnailProvider)
+        public bool HasBookmark
+        {
+            get { return Bookmark != null; }
+        }
+
+        public string LastWatchedDescription
+        {
+            get; private set;
+        }
+
+        public SeasonEpisodesIconListViewModel_EpisodeIconViewModel(Episode episode, IEpisodeThumbnailFilenameProvider thumbnailProvider, Bookmark bookmark = null, LastWatchedEntry lastWatchedEntry = null)
         {
             this.Episode = episode;
             this.ThumbnailFilename = thumbnailProvider.GetThumbnailFilenameForEpisode(episode).ActualFilename;
+
+            Bookmark = bookmark;
+            LastWatchedEntry = lastWatchedEntry;
+
+            if (LastWatchedEntry != null)
+            {
+                var dateTimeStringConverter = new DateTimeToHumanReadableFormatConverter();
+                LastWatchedDescription = dateTimeStringConverter.ConvertDateTimeToHumanReadableFormat(LastWatchedEntry.Time);
+            }
         }
     }
+
     #endregion
 }

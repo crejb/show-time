@@ -1,5 +1,7 @@
 ﻿using System;
 using ShowTime.Model;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ShowTime.Services.CloseActions
 {
@@ -27,13 +29,19 @@ namespace ShowTime.Services.CloseActions
 
             if (actionCalculator.ShouldMarkAsWatched)
                 MarkEpisodeAsWatched(episode);
+
+            if (actionCalculator.ShouldClearBookmark || actionCalculator.ShouldSetBookmark || actionCalculator.ShouldMarkAsWatched)
+            {
+                //dataStore.BookmarkRepository.Save();
+                //dataStore.LastWatchedRepository.Save();
+            }
         }
 
         private void ClearEpisodeBookmark(Episode episode)
         {
             var bookmarksForEpisode = dataStore.BookmarkRepository.Query(bk => bk.EpisodeId.Equals(episode.Id));
-
-            foreach (var bookmark in bookmarksForEpisode)
+            
+            foreach (var bookmark in bookmarksForEpisode.ToList())
             {
                 dataStore.BookmarkRepository.Delete(bookmark);
             }
@@ -48,7 +56,8 @@ namespace ShowTime.Services.CloseActions
 
         private void MarkEpisodeAsWatched(Episode episode)
         {
-            //TODO: Add Watched repository
+            var newLastWatchedEntry = new LastWatchedEntry(episode.Id, DateTime.Now);
+            dataStore.LastWatchedRepository.Insert(newLastWatchedEntry);
         }
     }
 }

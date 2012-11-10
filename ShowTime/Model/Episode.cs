@@ -78,9 +78,7 @@ namespace ShowTime.Model
             }
 
             // Return true if the fields match:
-            return this.ShowId.Equals(that.ShowId) &&
-                this.SeasonId.Equals(that.SeasonId) &&
-                this.EpisodeNumber == that.EpisodeNumber;
+            return this.Equals(that);
         }
 
         public bool Equals(EpisodeId other)

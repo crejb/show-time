@@ -72,7 +72,6 @@ namespace ShowTime.ViewModel
             tvShowListViewModel = new TvShowIconsListViewModel(dataStore);
             tvShowListViewModel.TvShowSelected += tvShowListViewModel_TvShowSelected;
 
-
             browseAllShowsViewModel = new BrowseAllShowsViewModel(dataStore, episodeThumbnailGenerator.FilenameProvider);
             updateDataViewModel = new UpdateShowTimeCollectionViewModel(dataStore, discovererProvider, episodeThumbnailGenerator);
 
@@ -82,39 +81,36 @@ namespace ShowTime.ViewModel
             breadCrumbViewModel = new BreadCrumbModel();
             breadCrumbViewModel.BreadCrumbItems = new System.Collections.ObjectModel.ObservableCollection<BreadCrumbItem>
             {
-                new BreadCrumbHeadItem("Home", new RelayCommand(param => HomeItemClicked())),
-                new BreadCrumbItem("Shows", new RelayCommand(param => ShowsItemClicked())),
-                new BreadCrumbItem("Really really long TV show name", new RelayCommand(param => SeasonsItemClicked())),
-                new BreadCrumbTailItem("Season 1", new RelayCommand(param => HeadItemClicked())),
+                new BreadCrumbHeadItem("Home",new RelayCommand(param => OnHomeCommandExecuted()))
             };
+            //{
+            //    new BreadCrumbHeadItem("Home", new RelayCommand(param => HomeItemClicked())),
+            //    new BreadCrumbItem("Shows", new RelayCommand(param => ShowsItemClicked())),
+            //    new BreadCrumbItem("Really really long TV show name", new RelayCommand(param => SeasonsItemClicked())),
+            //    new BreadCrumbTailItem("Season 1", new RelayCommand(param => HeadItemClicked())),
+            //};
 
             OnNavigateToViewRequested(mainMenuViewModel);
-        }
-
-        private void HeadItemClicked()
-        {
-        }
-
-        private void SeasonsItemClicked()
-        {
-        }
-
-        private void ShowsItemClicked()
-        {
-        }
-
-        private void HomeItemClicked()
-        {
         }
 
 
         private void mainMenuViewModel_WatchShowsSelected()
         {
+            breadCrumbViewModel.BreadCrumbItems.Clear();
+            breadCrumbViewModel.BreadCrumbItems.Add(new BreadCrumbHeadItem("Home", new RelayCommand(param => OnHomeCommandExecuted())));
+            breadCrumbViewModel.BreadCrumbItems.Add(new BreadCrumbTailItem("TV Shows", null));
+
+
             OnNavigateToViewRequested(tvShowListViewModel);
         }
 
         private void tvShowListViewModel_TvShowSelected(TVShowId showId)
         {
+            breadCrumbViewModel.BreadCrumbItems.Clear();
+            breadCrumbViewModel.BreadCrumbItems.Add(new BreadCrumbHeadItem("Home", new RelayCommand(param => OnHomeCommandExecuted())));
+            breadCrumbViewModel.BreadCrumbItems.Add(new BreadCrumbItem("TV Shows", new RelayCommand(param => mainMenuViewModel_WatchShowsSelected())));
+            breadCrumbViewModel.BreadCrumbItems.Add(new BreadCrumbTailItem(showId.Name, null));
+
             var seasonsListViewModel = new SeasonIconsListViewModel(dataStore, showId);
             seasonsListViewModel.SeasonSelected += seasonsListViewModel_SeasonSelected;
             OnNavigateToViewRequested(seasonsListViewModel);
@@ -122,6 +118,12 @@ namespace ShowTime.ViewModel
 
         private void seasonsListViewModel_SeasonSelected(SeasonId seasonId)
         {
+            breadCrumbViewModel.BreadCrumbItems.Clear();
+            breadCrumbViewModel.BreadCrumbItems.Add(new BreadCrumbHeadItem("Home", new RelayCommand(param => OnHomeCommandExecuted())));
+            breadCrumbViewModel.BreadCrumbItems.Add(new BreadCrumbItem("TV Shows", new RelayCommand(param => mainMenuViewModel_WatchShowsSelected())));
+            breadCrumbViewModel.BreadCrumbItems.Add(new BreadCrumbItem(seasonId.ShowId.Name, new RelayCommand(param => tvShowListViewModel_TvShowSelected(seasonId.ShowId))));
+            breadCrumbViewModel.BreadCrumbItems.Add(new BreadCrumbTailItem("Season " + seasonId.SeasonNumber, null));
+
             var episodesListViewModel = new EpisodeIconsListViewModel(dataStore, seasonId, episodeThumbnailGenerator.FilenameProvider);
             episodesListViewModel.EpisodeSelected += episodesListViewModel_EpisodeSelected;
             OnNavigateToViewRequested(episodesListViewModel);
@@ -147,6 +149,8 @@ namespace ShowTime.ViewModel
 
         private void OnHomeCommandExecuted()
         {
+            breadCrumbViewModel.BreadCrumbItems.Clear();
+            breadCrumbViewModel.BreadCrumbItems.Add(new BreadCrumbHeadItem("Home", new RelayCommand(param => OnHomeCommandExecuted())));
             OnNavigateToViewRequested(mainMenuViewModel);
         }
 

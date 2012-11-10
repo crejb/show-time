@@ -29,11 +29,15 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Grid.Row="0">Last Watched:</TextBlock>
-                <TextBlock Text="{Binding Path=LastWatched}"></TextBlock>
+                <TextBlock Text="{Binding Path=LastWatchedTime}"></TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Grid.Row="0">Watches:</TextBlock>
                 <TextBlock Text="{Binding Path=ViewCount}"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Grid.Row="0">Bookmark:</TextBlock>
+                <TextBlock Text="{Binding Path=BookmarkTime}"></TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Grid.Row="0">Filename:</TextBlock>
