@@ -29,6 +29,7 @@ namespace ShowTime
             // Manually close the window automatically without firing the CloseVideoCommand,
             // and fire the VideoCompleteCommand
             ctlVideoPlayer.VideoCompleteCommand = new RelayCommand(param => VideoCompletedHandler());
+            ctlVideoPlayer.VideoStoppedCommand = new RelayCommand(param => VideoStoppedHandler());
         }
 
         private void VideoCompletedHandler()
@@ -42,6 +43,12 @@ namespace ShowTime
             {
                 completedCommand.Execute(null);
             }
+        }
+
+        private void VideoStoppedHandler()
+        {
+            isClosingDueToVideoComplete = false;
+            this.Close();
         }
 
         protected override void OnClosed(EventArgs e)

@@ -7,6 +7,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
+        <Grid.Resources>
+            <Style x:Key="ControlButtonStyle" TargetType="FrameworkElement">
+                <Setter Property="Width" Value="30" />
+                <Setter Property="Height" Value="30" />
+            </Style>
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -15,7 +21,7 @@
             <MediaElement x:Name="ctrlMedia" LoadedBehavior="Manual" ScrubbingEnabled="True" MouseUp="ctrlMedia_MouseUp">
             </MediaElement>
         </Grid>
-        <StackPanel Grid.Row="1">
+        <StackPanel x:Name="pnlControls" Grid.Row="1">
             <DockPanel>
                 <TextBox x:Name="ctrlFilename" Text="{Binding Filename, ElementName=ThisVideoPlayerControl}"></TextBox>
             </DockPanel>
@@ -26,10 +32,25 @@
                         Thumb.DragStarted="ctrlTimeSlider_DragStarted"
                         Thumb.DragCompleted="ctrlTimeSlider_DragCompleted"></Slider>
             </DockPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button x:Name="ctrlPlayButton" Content="Play" Click="ctrlPlayButton_Click" />
-                <Button x:Name="ctrlPauseButton" Content="Pause" Click="ctrlPauseButton_Click" />
-            </StackPanel>
+            <DockPanel>
+                <Button x:Name="ctrlPlayButton" Style="{StaticResource ControlButtonStyle}"  Click="ctrlPlayButton_Click">
+                    <Image Source="/ShowTime;component/Resources/play.png"></Image>
+                </Button>
+                <Button x:Name="ctrlPauseButton" Style="{StaticResource ControlButtonStyle}"  Click="ctrlPauseButton_Click">
+                    <Image Source="/ShowTime;component/Resources/pause.png"></Image>
+                </Button>
+                <Button x:Name="ctrlStopButton" Style="{StaticResource ControlButtonStyle}" Command="{Binding VideoStoppedCommand, ElementName=ThisVideoPlayerControl}">
+                    <Image Source="/ShowTime;component/Resources/stop.png"></Image>
+                </Button>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Image Style="{StaticResource ControlButtonStyle}" Source="/ShowTime;component/Resources/volume.png"></Image>
+                    <Slider x:Name="ctrlVolumeSlider" 
+                            Minimum="0" Maximum="1" Value="0.5" Width="70"
+                            IsMoveToPointEnabled="true"
+                            ValueChanged="ctrlVolumeSlider_ValueChanged" ></Slider>
+                </StackPanel>
+            </DockPanel>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -44,6 +44,12 @@ namespace ShowTime.View.Controls
             set { SetValue(VideoCompleteCommandProperty, value); }
         }
 
+        public ICommand VideoStoppedCommand
+        {
+            get { return (ICommand)GetValue(VideoStoppedCommandProperty); }
+            set { SetValue(VideoStoppedCommandProperty, value); }
+        }
+
         #region Dependency Properties
         public static readonly DependencyProperty FilenameProperty =
             DependencyProperty.Register("Filename", typeof(string), typeof(VideoPlayerControl), new UIPropertyMetadata("", FilenamePropertyChangedCallback));
@@ -53,6 +59,8 @@ namespace ShowTime.View.Controls
             DependencyProperty.Register("SeekPosition", typeof(TimeSpan), typeof(VideoPlayerControl), new UIPropertyMetadata(TimeSpan.Zero, SeekPositionPropertyChangedCallback));
         public static readonly DependencyProperty VideoCompleteCommandProperty =
             DependencyProperty.Register("VideoCompleteCommand", typeof(ICommand), typeof(VideoPlayerControl), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty VideoStoppedCommandProperty =
+            DependencyProperty.Register("VideoStoppedCommand", typeof(ICommand), typeof(VideoPlayerControl), new UIPropertyMetadata(null));
         #endregion
 
         #region Dependency Property Callbacks
@@ -221,6 +229,19 @@ namespace ShowTime.View.Controls
 
         private void ctrlMedia_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            if (e.ChangedButton == MouseButton.Right)
+            {
+                if (pnlControls.Visibility == System.Windows.Visibility.Visible)
+                {
+                    pnlControls.Visibility = System.Windows.Visibility.Collapsed;
+                }
+                else
+                {
+                    pnlControls.Visibility = System.Windows.Visibility.Visible;
+                }
+                return;
+            }
+
             var window = Window.GetWindow(this);
             if (isFullScreen)
             {
@@ -235,5 +256,12 @@ namespace ShowTime.View.Controls
                 isFullScreen = true;
             }
         }
+
+        private void ctrlVolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            ctrlMedia.Volume = e.NewValue;
+        }
+
+        
     }
 }
