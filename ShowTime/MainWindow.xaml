@@ -10,10 +10,18 @@
     </Window.Resources>
     
     <Grid>
-        <Border Background="Red" BorderBrush="Blue" BorderThickness="4">
+        <Grid.Resources>
+            <LinearGradientBrush x:Key="BackgroundColour" StartPoint="0,0" EndPoint="0,1">
+                <GradientStopCollection>
+                    <GradientStop Offset="0" Color="Black"></GradientStop>
+                    <GradientStop Offset="1" Color="White"></GradientStop>
+                </GradientStopCollection>
+            </LinearGradientBrush>
+        </Grid.Resources>
+        <Border Background="{StaticResource BackgroundColour}">
             <DockPanel>
                 <view:NavigatorView x:Name="ctrlNavigator" DockPanel.Dock="Top"></view:NavigatorView>
-                <Grid Background="Bisque">
+                <Grid>
                     <ContentControl Content="{Binding CurrentViewModel}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="ctrlContentPanel"></ContentControl>
                 </Grid>
             </DockPanel>

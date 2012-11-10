@@ -10,14 +10,6 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.Resources>
-            <Style x:Key="LabelStyle" TargetType="Label">
-                <Setter Property="Foreground" Value="Red"></Setter>
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding Path=HasBookmark}" Value="true">
-                        <Setter Property="Foreground" Value="Blue"></Setter>
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
             <Style x:Key="BookmarkImageVisibleStyle" TargetType="Image">
                 <Setter Property="Visibility" Value="Collapsed"></Setter>
                 <Style.Triggers>
@@ -46,7 +38,7 @@
                     <Grid>
                         <StackPanel Orientation="Vertical">
                             <Image Width="120" Height="70" Source="{Binding Path=MenuItemImage}"></Image>
-                            <Label Content="{Binding Path=MenuItemText}" Style="{StaticResource LabelStyle}" />
+                            <Label Content="{Binding Path=MenuItemText}" Foreground="Black" />
                         </StackPanel>
 
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">

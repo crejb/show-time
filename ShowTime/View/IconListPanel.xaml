@@ -16,7 +16,7 @@
                     <DataTemplate x:Name="DefaultIconContent">
                         <StackPanel Orientation="Vertical">
                             <Image Width="120" Height="70" Source="{Binding Path=MenuItemImage}"></Image>
-                            <Label Foreground="Blue" Content="{Binding Path=MenuItemText}" />
+                            <Label Foreground="Black" Content="{Binding Path=MenuItemText}" />
                         </StackPanel>
                     </DataTemplate>
                 </Setter.Value>
@@ -26,11 +26,13 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid>
             <Grid.Resources>
+                <SolidColorBrush x:Key="ItemBackgroundColour" Color="White" Opacity="0.5">
+                </SolidColorBrush>
                 <Style x:Key="ButtonIconStyle" TargetType="Button">
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type Button}">
-                                <Border Name="border" Background="LightBlue"
+                                <Border Name="border" Background="{StaticResource ItemBackgroundColour}"
                                                         BorderThickness="2"
                                                         BorderBrush="Black"
                                                         Width="150"
