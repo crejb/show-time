@@ -32,8 +32,8 @@ namespace ShowTime.Services.CloseActions
 
             if (actionCalculator.ShouldClearBookmark || actionCalculator.ShouldSetBookmark || actionCalculator.ShouldMarkAsWatched)
             {
-                //dataStore.BookmarkRepository.Save();
-                //dataStore.LastWatchedRepository.Save();
+                dataStore.BookmarkRepository.Save();
+                dataStore.LastWatchedRepository.Save();
             }
         }
 

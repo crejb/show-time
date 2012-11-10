@@ -1,7 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:viewmodel="clr-namespace:ShowTime.ViewModel"
-                    xmlns:view="clr-namespace:ShowTime.View">
+                    xmlns:iconlistviewmodel="clr-namespace:ShowTime.ViewModel.IconListViews"
+                    xmlns:view="clr-namespace:ShowTime.View"
+                    xmlns:iconlistviews="clr-namespace:ShowTime.View.IconListViews">
     <DataTemplate DataType="{x:Type viewmodel:MainMenuViewModel}">
         <view:MainMenuView />
     </DataTemplate>
@@ -14,16 +16,16 @@
         <view:UpdateShowTimeCollectionView />
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type viewmodel:TvShowIconsListViewModel}">
-        <view:TvShowIconsListView />
+    <DataTemplate DataType="{x:Type iconlistviewmodel:TvShowIconListViewModel}">
+        <iconlistviews:TvShowIconListView />
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type viewmodel:SeasonIconsListViewModel}">
-        <view:SeasonIconsListView />
+    <DataTemplate DataType="{x:Type iconlistviewmodel:SeasonIconListViewModel}">
+        <iconlistviews:SeasonIconListView />
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type viewmodel:EpisodeIconsListViewModel}">
-        <view:EpisodeIconsListView />
+    <DataTemplate DataType="{x:Type iconlistviewmodel:EpisodeIconListViewModel}">
+        <iconlistviews:EpisodeIconListView />
     </DataTemplate>
 
 </ResourceDictionary>

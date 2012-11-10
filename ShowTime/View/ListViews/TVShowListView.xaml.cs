@@ -13,7 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ShowTime.Model;
 
-namespace ShowTime.View
+namespace ShowTime.View.ListViews
 {
     /// <summary>
     /// Interaction logic for TVShowSeasonsListView.xaml

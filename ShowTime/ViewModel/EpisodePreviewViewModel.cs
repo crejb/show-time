@@ -23,6 +23,9 @@ namespace ShowTime.ViewModel
 
         public ICommand NavigateToFileCommand { get; private set; }
         public ICommand PlayCommand { get; private set; }
+        public ICommand ClearBookmarkCommand { get; private set; }
+        public ICommand ResetLastWatchedCommand { get; private set; }
+        public ICommand SetLastWatchedCommand { get; private set; }
 
         private readonly Bookmark bookmark;
         public bool HasBookmark { get { return bookmark != null; } }
@@ -35,7 +38,7 @@ namespace ShowTime.ViewModel
 
             EpisodeThumbnail = thumbnailProvider.GetThumbnailFilenameForEpisode(episode).ActualFilename;
 
-            // SHould be either 1 or 0 bookmarks for the episode
+            // Should be either 1 or 0 bookmarks for the episode
             this.bookmark = dataStore.BookmarkRepository.Query(bk => bk.EpisodeId.Equals(episodeId)).
                 FirstOrDefault();
 
@@ -62,6 +65,21 @@ namespace ShowTime.ViewModel
             {
                 PlayEpisode();
             });
+
+            ClearBookmarkCommand = new ViewModel.Commands.RelayCommand(param =>
+            {
+                ClearBookmark();
+            });
+
+            ResetLastWatchedCommand = new ViewModel.Commands.RelayCommand(param =>
+            {
+                ResetLastWatched();
+            });
+
+            SetLastWatchedCommand = new ViewModel.Commands.RelayCommand(param =>
+            {
+                SetLastWatched();
+            });
         }
 
         private VideoPlayRequestHandler playHandler;
@@ -81,6 +99,33 @@ namespace ShowTime.ViewModel
             playHandler.PlayVideo(
                 new VideoPlayRequest(episode.Id, bookmark)
             );
+        }
+
+        private void ClearBookmark()
+        {
+            var bookmarksForEpisode = dataStore.BookmarkRepository.Query(bk => bk.EpisodeId.Equals(episode.Id));
+            foreach (var bookmark in bookmarksForEpisode.ToList())
+            {
+                dataStore.BookmarkRepository.Delete(bookmark);
+            }
+            dataStore.BookmarkRepository.Save();
+        }
+
+        private void ResetLastWatched()
+        {
+            var lastWatchedEntriesForEpisode = dataStore.LastWatchedRepository.Query(lwe => lwe.EpisodeId.Equals(episode.Id));
+            foreach (var lwe in lastWatchedEntriesForEpisode.ToList())
+            {
+                dataStore.LastWatchedRepository.Delete(lwe);
+            }
+            dataStore.LastWatchedRepository.Save();
+        }
+
+        private void SetLastWatched()
+        {
+            var newLastWatchedEntry = new LastWatchedEntry(episode.Id, DateTime.Now);
+            dataStore.LastWatchedRepository.Insert(newLastWatchedEntry);
+            dataStore.LastWatchedRepository.Save();
         }
     }
 }

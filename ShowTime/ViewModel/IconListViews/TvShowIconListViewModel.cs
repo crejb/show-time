@@ -6,9 +6,9 @@ using ShowTime.ViewModel.Commands;
 using System.Windows.Input;
 using ShowTime.Model;
 
-namespace ShowTime.ViewModel
+namespace ShowTime.ViewModel.IconListViews
 {
-    public class TvShowIconsListViewModel : ViewModelBase
+    public class TvShowIconListViewModel : ViewModelBase
     {
         public event Action<TVShowId> TvShowSelected;
 
@@ -17,7 +17,7 @@ namespace ShowTime.ViewModel
         private readonly IDataStore dataStore;
         public IEnumerable<MenuItemCommand> MenuItemCommands { get { return BuildMenuItemCommands(); } }
 
-        public TvShowIconsListViewModel(IDataStore dataStore)
+        public TvShowIconListViewModel(IDataStore dataStore)
         {
             this.dataStore = dataStore;
             this.SelectShowCommand = new RelayCommand(param => OnShowSelected((param as MenuItemCommand).Tag as TVShowId));
@@ -29,7 +29,7 @@ namespace ShowTime.ViewModel
                 show=>
                 new MenuItemCommand(
                     show.Name,
-                    MenuItemCommand.BuildImageFromResource("../Resources/tv.jpg"),
+                    MenuItemCommand.BuildImageFromResource("../../Resources/tv.jpg"),
                     show.Id,
                     null, null
                 ));

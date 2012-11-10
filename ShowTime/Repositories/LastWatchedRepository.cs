@@ -29,17 +29,15 @@ namespace ShowTime.Repositories
 
         protected override void SaveEntity(LastWatchedEntry entity, XmlWriter writer)
         {
-            throw new Exception();
-            //writer.WriteElementString("Name", entity.Name);
-            //writer.WriteElementString("Description", entity.Description);
+            XmlPersistenceUtilities.SaveEpisodeId(entity.Id.EpisodeId, writer);
+            writer.WriteElementString("Time", entity.Time.ToString());
         }
 
         protected override LastWatchedEntry LoadEntity(XmlElement element)
         {
-            throw new Exception();
-            //var name = element.SelectSingleNode("Name").InnerText;
-            //var description = element.SelectSingleNode("Description").InnerText;
-            //return new TVShow(name, description);
+            var episodeId = XmlPersistenceUtilities.LoadEpisodeId(element);
+            var time = DateTime.Parse(element.SelectSingleNode("Time").InnerText);
+            return new LastWatchedEntry(episodeId, time);
         }
     }
 }

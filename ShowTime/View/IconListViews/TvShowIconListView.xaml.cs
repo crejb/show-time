@@ -12,14 +12,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ShowTime.View
+namespace ShowTime.View.IconListViews
 {
     /// <summary>
-    /// Interaction logic for EpisodeIconsListView.xaml
+    /// Interaction logic for TvShowIconListView.xaml
     /// </summary>
-    public partial class EpisodeIconsListView : UserControl
+    public partial class TvShowIconListView : UserControl
     {
-        public EpisodeIconsListView()
+        public TvShowIconListView()
         {
             InitializeComponent();
         }

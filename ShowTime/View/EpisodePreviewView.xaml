@@ -48,6 +48,11 @@
                 </TextBlock>
             </StackPanel>
             <Button Command="{Binding PlayCommand}">Play</Button>
+            <StackPanel Orientation="Horizontal">
+                <Button Command="{Binding ClearBookmarkCommand}">Clear Bookmark</Button>
+                <Button Command="{Binding ResetLastWatchedCommand}">Reset Watched</Button>
+                <Button Command="{Binding SetLastWatchedCommand}">Mark Watched</Button>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </UserControl>

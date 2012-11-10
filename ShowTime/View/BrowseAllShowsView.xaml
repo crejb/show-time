@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:view="clr-namespace:ShowTime.View"
+             xmlns:listviews="clr-namespace:ShowTime.View.ListViews"
              xmlns:viewModel="clr-namespace:ShowTime.ViewModel"
              xmlns:model="clr-namespace:ShowTime.Model"
              mc:Ignorable="d" 
@@ -25,19 +26,19 @@
         </StackPanel.Resources>
         
         <HeaderedContentControl Header="TV Shows">
-            <view:TVShowListView x:Name="ShowsView" DataContext="{Binding Path=ShowsViewModel}"></view:TVShowListView>
+            <listviews:TVShowListView x:Name="ShowsView" DataContext="{Binding Path=ShowsViewModel}"></listviews:TVShowListView>
         </HeaderedContentControl>
         
         <HeaderedContentControl Header="Seasons">
-            <view:TVShowSeasonsListView x:Name="SeasonsView" DataContext="{Binding Path=SelectedShowViewModel}" />
+            <listviews:SeasonsForTVShowListView x:Name="SeasonsView" DataContext="{Binding Path=SelectedShowViewModel}" />
         </HeaderedContentControl>
 
         <HeaderedContentControl Header="Episodes">
-            <view:SeasonEpisodesIconListView x:Name="EpisodesView" DataContext="{Binding Path=SelectedSeasonViewModel}" />
+            <listviews:EpisodesForSeasonListView x:Name="EpisodesView" DataContext="{Binding Path=SelectedSeasonViewModel}" />
         </HeaderedContentControl>
 
         <HeaderedContentControl Header="Episode">
-            <view:EpisodeView x:Name="EpisodeView" 
+            <view:EpisodePreviewView x:Name="EpisodeView" 
                               DataContext="{Binding SelectedEpisodeViewModel}" 
                               Style="{StaticResource HideWhenNullDataContextStyle}" />
         </HeaderedContentControl>

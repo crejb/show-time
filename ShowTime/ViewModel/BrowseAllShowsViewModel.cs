@@ -6,6 +6,7 @@ using ShowTime.Model;
 using System.Windows.Data;
 using System.Globalization;
 using ShowTime.Services;
+using ShowTime.ViewModel.ListViews;
 
 namespace ShowTime.ViewModel
 {
@@ -34,13 +35,13 @@ namespace ShowTime.ViewModel
 
                 OnPropertyChanged("ShowsViewModel");
 
-                SelectedShowViewModel = (showsViewModel == null || showsViewModel.SelectedShow == null ? null : new TVShowSeasonsListViewModel(dataManager, showsViewModel.SelectedShow.TVShow));
+                SelectedShowViewModel = (showsViewModel == null || showsViewModel.SelectedShow == null ? null : new SeasonsForTVShowListViewModel(dataManager, showsViewModel.SelectedShow.TVShow));
             }
         }
 
         //public TVShow SelectedShow { get { return SelectedShowViewModel == null ? null : SelectedShowViewModel.TVShow; } }
-        private TVShowSeasonsListViewModel selectedShowViewModel;
-        public TVShowSeasonsListViewModel SelectedShowViewModel
+        private SeasonsForTVShowListViewModel selectedShowViewModel;
+        public SeasonsForTVShowListViewModel SelectedShowViewModel
         {
             get{ return selectedShowViewModel; }
             set
@@ -58,13 +59,12 @@ namespace ShowTime.ViewModel
 
                 OnPropertyChanged("SelectedShowViewModel");
 
-                SelectedSeasonViewModel = (selectedShowViewModel == null || selectedShowViewModel.SelectedSeason == null ? null : new SeasonEpisodesIconListViewModel(dataManager, episodeThumbnailProvider, selectedShowViewModel.SelectedSeason.Season));
+                SelectedSeasonViewModel = (selectedShowViewModel == null || selectedShowViewModel.SelectedSeason == null ? null : new EpisodesForSeasonListViewModel(dataManager, episodeThumbnailProvider, selectedShowViewModel.SelectedSeason.Season));
             }
         }
 
-        //public Season SelectedSeason { get { return SelectedSeasonViewModel == null ? null : SelectedSeasonViewModel.Season; } }
-        private SeasonEpisodesIconListViewModel selectedSeasonViewModel;
-        public SeasonEpisodesIconListViewModel SelectedSeasonViewModel
+        private EpisodesForSeasonListViewModel selectedSeasonViewModel;
+        public EpisodesForSeasonListViewModel SelectedSeasonViewModel
         {
             get { return selectedSeasonViewModel; }
             set
@@ -82,13 +82,12 @@ namespace ShowTime.ViewModel
 
                 OnPropertyChanged("SelectedSeasonViewModel");
 
-                SelectedEpisodeViewModel = (selectedSeasonViewModel == null || selectedSeasonViewModel.SelectedEpisode == null ? null : new EpisodeViewModel(dataManager, selectedSeasonViewModel.SelectedEpisode.Episode));
+                SelectedEpisodeViewModel = (selectedSeasonViewModel == null || selectedSeasonViewModel.SelectedEpisode == null ? null : new EpisodePreviewViewModel(dataManager, selectedSeasonViewModel.SelectedEpisode.Episode.Id, episodeThumbnailProvider));
             }
         }
 
-        //public Episode SelectedEpisode { get { return SelectedEpisodeViewModel.Episode; } }
-        private EpisodeViewModel selectedEpisodeViewModel;
-        public EpisodeViewModel SelectedEpisodeViewModel
+        private EpisodePreviewViewModel selectedEpisodeViewModel;
+        public EpisodePreviewViewModel SelectedEpisodeViewModel
         {
             get { return selectedEpisodeViewModel; }
             set
@@ -119,7 +118,7 @@ namespace ShowTime.ViewModel
                 }
                 else
                 {
-                    SelectedShowViewModel = new TVShowSeasonsListViewModel(dataManager, showsViewModel.SelectedShow.TVShow);
+                    SelectedShowViewModel = new SeasonsForTVShowListViewModel(dataManager, showsViewModel.SelectedShow.TVShow);
                 }
             }
         }
@@ -134,7 +133,7 @@ namespace ShowTime.ViewModel
                 }
                 else
                 {
-                    SelectedSeasonViewModel = new SeasonEpisodesIconListViewModel(dataManager, episodeThumbnailProvider, selectedShowViewModel.SelectedSeason.Season);
+                    SelectedSeasonViewModel = new EpisodesForSeasonListViewModel(dataManager, episodeThumbnailProvider, selectedShowViewModel.SelectedSeason.Season);
                 }
             }
         }
@@ -149,7 +148,7 @@ namespace ShowTime.ViewModel
                 }
                 else
                 {
-                    SelectedEpisodeViewModel = new EpisodeViewModel(dataManager, selectedSeasonViewModel.SelectedEpisode.Episode);
+                    SelectedEpisodeViewModel = new EpisodePreviewViewModel(dataManager, selectedSeasonViewModel.SelectedEpisode.Episode.Id, episodeThumbnailProvider);
                 }
             }
         }

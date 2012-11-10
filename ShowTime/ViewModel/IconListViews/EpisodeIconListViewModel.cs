@@ -6,9 +6,9 @@ using System.Windows.Input;
 using ShowTime.ViewModel.Commands;
 using ShowTime.Model;
 
-namespace ShowTime.ViewModel
+namespace ShowTime.ViewModel.IconListViews
 {
-    public class EpisodeIconsListViewModel : ViewModelBase
+    public class EpisodeIconListViewModel : ViewModelBase
     {
         public event Action<EpisodeId> EpisodeSelected;
 
@@ -48,7 +48,7 @@ namespace ShowTime.ViewModel
         private readonly Season season;
         public IEnumerable<MenuItemCommand> MenuItemCommands { get { return BuildMenuItemCommands(); } }
 
-        public EpisodeIconsListViewModel(IDataStore dataStore, SeasonId seasonId, Services.IEpisodeThumbnailFilenameProvider thumbnailProvider)
+        public EpisodeIconListViewModel(IDataStore dataStore, SeasonId seasonId, Services.IEpisodeThumbnailFilenameProvider thumbnailProvider)
         {
             this.dataStore = dataStore;
             this.thumbnailProvider = thumbnailProvider;
@@ -85,6 +85,7 @@ namespace ShowTime.ViewModel
     public class EpisodeIconMenuItemCommand : MenuItemCommand
     {
         public bool HasBookmark { get; private set; }
+        public bool HasLastWatched { get; private set; }
         public string LastWatchedDescription { get; private set; }
 
         public EpisodeIconMenuItemCommand(
@@ -104,6 +105,7 @@ namespace ShowTime.ViewModel
 
             if (lastWatchedEntry != null)
             {
+                HasLastWatched = true;
                 var dateTimeStringConverter = new Services.DateTimeToHumanReadableFormatConverter();
                 LastWatchedDescription = dateTimeStringConverter.ConvertDateTimeToHumanReadableFormat(lastWatchedEntry.Time);
             }

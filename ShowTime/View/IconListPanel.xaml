@@ -23,52 +23,54 @@
             </Setter>
         </Style>
     </UserControl.Style>
-    <Grid>
-        <Grid.Resources>
-            <Style x:Key="ButtonIconStyle" TargetType="Button">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type Button}">
-                            <Border Name="border" Background="LightBlue"
-                                                  BorderThickness="2"
-                                                  BorderBrush="Black"
-                                                  Width="150"
-                                                  CornerRadius="5"
-                                                  Margin="2">
-                                <ContentPresenter Name="content" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          Margin="{TemplateBinding Padding}"
-                                          RecognizesAccessKey="True"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="border" Property="Background" Value="LightGray" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-        </Grid.Resources>
-        <ItemsControl FlowDirection="LeftToRight" UseLayoutRounding="True" ItemsSource="{Binding MenuItemCommands, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Button x:Name="bdrItem" Style="{StaticResource ButtonIconStyle}" Content="{Binding}"
-                        ContentTemplate="{Binding IconContent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" 
-                        Click="bdrItem_Click" MouseDoubleClick="bdrItem_MouseDoubleClick">
-                        <!--<Button.InputBindings>
-                            <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DoubleClickCommand}" />
-                            <MouseBinding Gesture="LeftClick" Command="{Binding SingleClickCommand}" />
-                        </Button.InputBindings>-->
-                    </Button>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
-    </Grid>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <Grid.Resources>
+                <Style x:Key="ButtonIconStyle" TargetType="Button">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Name="border" Background="LightBlue"
+                                                        BorderThickness="2"
+                                                        BorderBrush="Black"
+                                                        Width="150"
+                                                        CornerRadius="5"
+                                                        Margin="2">
+                                    <ContentPresenter Name="content" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                Margin="{TemplateBinding Padding}"
+                                                RecognizesAccessKey="True"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="border" Property="Background" Value="LightGray" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Grid.Resources>
+            <ItemsControl FlowDirection="LeftToRight" UseLayoutRounding="True" ItemsSource="{Binding MenuItemCommands, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button x:Name="bdrItem" Style="{StaticResource ButtonIconStyle}" Content="{Binding}"
+                            ContentTemplate="{Binding IconContent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" 
+                            Click="bdrItem_Click" MouseDoubleClick="bdrItem_MouseDoubleClick">
+                            <!--<Button.InputBindings>
+                                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DoubleClickCommand}" />
+                                <MouseBinding Gesture="LeftClick" Command="{Binding SingleClickCommand}" />
+                            </Button.InputBindings>-->
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

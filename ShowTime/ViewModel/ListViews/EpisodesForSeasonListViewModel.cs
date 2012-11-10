@@ -7,33 +7,30 @@ using System.Windows.Data;
 using System.Globalization;
 using ShowTime.Services;
 
-namespace ShowTime.ViewModel
+namespace ShowTime.ViewModel.ListViews
 {
-    public class SeasonEpisodesIconListViewModel : ViewModelBase
+    public class EpisodesForSeasonListViewModel : ViewModelBase
     {
         private IDataStore dataManager;
         private IEpisodeThumbnailFilenameProvider thumbnailProvider;
-
         private Season season;
-
         private TVShow TVShow
         {
             get { return dataManager.TVShowRepository.Find(season.TVShowId); }
         }
          
-
         public string SeasonName
         {
             get { return TVShow.Name + " Season " + season.Number; }
         }
 
-        public IEnumerable<SeasonEpisodesIconListViewModel_EpisodeIconViewModel> Episodes
+        public IEnumerable<EpisodesForSeasonListViewModel_EpisodeListViewItemViewModel> Episodes
         {
             get
             {
                 return dataManager.EpisodeRepository
                     .Query(ep => ep.SeasonId.Equals(season.Id))
-                    .Select(e => new SeasonEpisodesIconListViewModel_EpisodeIconViewModel(
+                    .Select(e => new EpisodesForSeasonListViewModel_EpisodeListViewItemViewModel(
                         e, 
                         thumbnailProvider, 
                         dataManager.BookmarkRepository.Find(new BookmarkId(e.Id)),
@@ -42,8 +39,8 @@ namespace ShowTime.ViewModel
             }
         }
 
-        private SeasonEpisodesIconListViewModel_EpisodeIconViewModel selectedEpisode = null;
-        public SeasonEpisodesIconListViewModel_EpisodeIconViewModel SelectedEpisode
+        private EpisodesForSeasonListViewModel_EpisodeListViewItemViewModel selectedEpisode = null;
+        public EpisodesForSeasonListViewModel_EpisodeListViewItemViewModel SelectedEpisode
         {
             get { return selectedEpisode; }
             set
@@ -57,7 +54,7 @@ namespace ShowTime.ViewModel
             }
         }
 
-        public SeasonEpisodesIconListViewModel(IDataStore dataManager, IEpisodeThumbnailFilenameProvider thumbnailProvider, Season season)
+        public EpisodesForSeasonListViewModel(IDataStore dataManager, IEpisodeThumbnailFilenameProvider thumbnailProvider, Season season)
         {
             this.dataManager = dataManager;
             this.thumbnailProvider = thumbnailProvider;
@@ -72,7 +69,7 @@ namespace ShowTime.ViewModel
     }
 
     #region Helper Classes- should be nested classes within TVShowSeasonsListViewModel but that doesn't work with XAML :(
-    public class SeasonEpisodesIconListViewModel_EpisodeIconViewModel : ViewModelBase
+    public class EpisodesForSeasonListViewModel_EpisodeListViewItemViewModel : ViewModelBase
     {
         public readonly Episode Episode;
         public readonly Bookmark Bookmark;
@@ -103,9 +100,14 @@ namespace ShowTime.ViewModel
             get; private set;
         }
 
-        public bool HasBookmark
+        public TimeSpan? BookmarkTime
         {
-            get { return Bookmark != null; }
+            get { return Bookmark != null ? Bookmark.Time : (TimeSpan?)null; }
+        }
+
+        public int WatchCount
+        {
+            get { return LastWatchedEntry != null ? 1 : 0; }
         }
 
         public string LastWatchedDescription
@@ -113,7 +115,7 @@ namespace ShowTime.ViewModel
             get; private set;
         }
 
-        public SeasonEpisodesIconListViewModel_EpisodeIconViewModel(Episode episode, IEpisodeThumbnailFilenameProvider thumbnailProvider, Bookmark bookmark = null, LastWatchedEntry lastWatchedEntry = null)
+        public EpisodesForSeasonListViewModel_EpisodeListViewItemViewModel(Episode episode, IEpisodeThumbnailFilenameProvider thumbnailProvider, Bookmark bookmark = null, LastWatchedEntry lastWatchedEntry = null)
         {
             this.Episode = episode;
             this.ThumbnailFilename = thumbnailProvider.GetThumbnailFilenameForEpisode(episode).ActualFilename;

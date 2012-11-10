@@ -60,6 +60,7 @@
     <Compile Include="DataLoading\HardcodedDataLoader.cs" />
     <Compile Include="DataLoading\IDataLoader.cs" />
     <Compile Include="Repositories\LastWatchedRepository.cs" />
+    <Compile Include="Repositories\XmlPersistenceUtilities.cs" />
     <Compile Include="Services\CloseActions\EpisodeCloseActionsCalculator.cs" />
     <Compile Include="Services\CloseActions\EpisodeCloseActionsExecutor.cs" />
     <Compile Include="Services\DateTimeToHumanReadableFormatConverter.cs" />
@@ -100,20 +101,18 @@
     <Compile Include="ViewModel\Commands\CommandViewModel.cs" />
     <Compile Include="ViewModel\Commands\MenuItemCommand.cs" />
     <Compile Include="ViewModel\Commands\RelayCommand.cs" />
-    <Compile Include="ViewModel\EpisodeIconsListViewModel.cs" />
+    <Compile Include="ViewModel\IconListViews\EpisodeIconListViewModel.cs" />
     <Compile Include="ViewModel\EpisodePreviewViewModel.cs" />
-    <Compile Include="ViewModel\TvShowIconsListViewModel.cs" />
+    <Compile Include="ViewModel\IconListViews\TvShowIconListViewModel.cs" />
     <Compile Include="ViewModel\MainMenuViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\NavigatorViewModel.cs" />
-    <Compile Include="ViewModel\SeasonIconsListViewModel.cs" />
+    <Compile Include="ViewModel\IconListViews\SeasonIconListViewModel.cs" />
     <Compile Include="ViewModel\UpdateShowTimeCollectionViewModel.cs" />
-    <Compile Include="ViewModel\EpisodeViewModel.cs" />
     <Compile Include="Services\EpisodeThumbnailProvider.cs" />
-    <Compile Include="ViewModel\SeasonEpisodesIconListViewModel.cs" />
-    <Compile Include="ViewModel\TVShowListViewModel.cs" />
-    <Compile Include="ViewModel\SeasonEpisodesListViewModel.cs" />
-    <Compile Include="ViewModel\TVShowSeasonsListViewModel.cs" />
+    <Compile Include="ViewModel\ListViews\EpisodesForSeasonListViewModel.cs" />
+    <Compile Include="ViewModel\ListViews\TVShowListViewModel.cs" />
+    <Compile Include="ViewModel\ListViews\SeasonsForTVShowListViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\BrowseAllShowsView.xaml.cs">
       <DependentUpon>BrowseAllShowsView.xaml</DependentUpon>
@@ -128,17 +127,17 @@
       <DependentUpon>BreadCrumbItemControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\BreadCrumbControl\BreadCrumbModel.cs" />
-    <Compile Include="View\EpisodeIconsListView.xaml.cs">
-      <DependentUpon>EpisodeIconsListView.xaml</DependentUpon>
+    <Compile Include="View\IconListViews\EpisodeIconListView.xaml.cs">
+      <DependentUpon>EpisodeIconListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EpisodePreviewView.xaml.cs">
       <DependentUpon>EpisodePreviewView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\SeasonIconsListView.xaml.cs">
-      <DependentUpon>SeasonIconsListView.xaml</DependentUpon>
+    <Compile Include="View\IconListViews\SeasonIconListView.xaml.cs">
+      <DependentUpon>SeasonIconListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TvShowIconsListView.xaml.cs">
-      <DependentUpon>TvShowIconsListView.xaml</DependentUpon>
+    <Compile Include="View\IconListViews\TvShowIconListView.xaml.cs">
+      <DependentUpon>TvShowIconListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\IconListPanel.xaml.cs">
       <DependentUpon>IconListPanel.xaml</DependentUpon>
@@ -149,20 +148,14 @@
     <Compile Include="View\NavigatorView.xaml.cs">
       <DependentUpon>NavigatorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\SeasonEpisodesIconListView.xaml.cs">
-      <DependentUpon>SeasonEpisodesIconListView.xaml</DependentUpon>
+    <Compile Include="View\ListViews\EpisodesForSeasonListView.xaml.cs">
+      <DependentUpon>EpisodesForSeasonListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TVShowListView.xaml.cs">
+    <Compile Include="View\ListViews\TVShowListView.xaml.cs">
       <DependentUpon>TVShowListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TVShowSeasonsListView.xaml.cs">
-      <DependentUpon>TVShowSeasonsListView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\EpisodeView.xaml.cs">
-      <DependentUpon>EpisodeView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\SeasonEpisodesListView.xaml.cs">
-      <DependentUpon>SeasonEpisodesListView.xaml</DependentUpon>
+    <Compile Include="View\ListViews\SeasonsForTVShowListView.xaml.cs">
+      <DependentUpon>SeasonsForTVShowListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UpdateShowTimeCollectionView.xaml.cs">
       <DependentUpon>UpdateShowTimeCollectionView.xaml</DependentUpon>
@@ -203,7 +196,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\EpisodeIconsListView.xaml">
+    <Page Include="View\IconListViews\EpisodeIconListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -211,11 +204,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\SeasonIconsListView.xaml">
+    <Page Include="View\IconListViews\SeasonIconListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\TvShowIconsListView.xaml">
+    <Page Include="View\IconListViews\TvShowIconListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -231,25 +224,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\SeasonEpisodesIconListView.xaml">
+    <Page Include="View\ListViews\EpisodesForSeasonListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\TVShowListView.xaml">
+    <Page Include="View\ListViews\TVShowListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\TVShowSeasonsListView.xaml">
+    <Page Include="View\ListViews\SeasonsForTVShowListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\EpisodeView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\SeasonEpisodesListView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UpdateShowTimeCollectionView.xaml">
       <SubType>Designer</SubType>
@@ -296,6 +281,7 @@
     <Resource Include="Resources\eye.png" />
     <Resource Include="Resources\star.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

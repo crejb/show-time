@@ -6,7 +6,7 @@ using ShowTime.Model;
 using System.Windows.Data;
 using System.Globalization;
 
-namespace ShowTime.ViewModel
+namespace ShowTime.ViewModel.ListViews
 {
     public class TVShowListViewModel : ViewModelBase
     {

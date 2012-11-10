@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ShowTime.View.EpisodeIconsListView"
+﻿<UserControl x:Class="ShowTime.View.IconListViews.EpisodeIconListView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -19,7 +19,7 @@
                 </Style.Triggers>
             </Style>
             <Style x:Key="BookmarkImageVisibleStyle" TargetType="Image">
-                <Setter Property="Visibility" Value="Hidden"></Setter>
+                <Setter Property="Visibility" Value="Collapsed"></Setter>
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding Path=HasBookmark}" Value="true">
                         <Setter Property="Visibility" Value="Visible"></Setter>
@@ -27,9 +27,10 @@
                 </Style.Triggers>
             </Style>
             <Style x:Key="WatchedImageVisibleStyle" TargetType="Image">
-                <Setter Property="Visibility" Value="Hidden"></Setter>
+                <Setter Property="ToolTip" Value="{Binding Path=LastWatchedDescription}"></Setter>
+                <Setter Property="Visibility" Value="Collapsed"></Setter>
                 <Style.Triggers>
-                    <DataTrigger Binding="{Binding Path=HasBookmark}" Value="true">
+                    <DataTrigger Binding="{Binding Path=HasLastWatched}" Value="true">
                         <Setter Property="Visibility" Value="Visible"></Setter>
                     </DataTrigger>
                 </Style.Triggers>
@@ -46,12 +47,12 @@
                         <StackPanel Orientation="Vertical">
                             <Image Width="120" Height="70" Source="{Binding Path=MenuItemImage}"></Image>
                             <Label Content="{Binding Path=MenuItemText}" Style="{StaticResource LabelStyle}" />
-                            <!-- TODO: If Bookmark, display an icon.  If has LastWatchedDescription, display this somehow. -->
                         </StackPanel>
 
-                        <Image Source="../Resources/eye.png" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource WatchedImageVisibleStyle}"></Image>
-                        <Image Source="../Resources/star.png" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,20,0,0" Style="{StaticResource BookmarkImageVisibleStyle}"></Image>
-
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <Image Source="/ShowTime;component/Resources/eye.png" Width="20" Height="20" Style="{StaticResource WatchedImageVisibleStyle}"></Image>
+                            <Image Source="/ShowTime;component/Resources/star.png" Width="20" Height="20" Style="{StaticResource BookmarkImageVisibleStyle}"></Image>
+                        </StackPanel>
                     </Grid>
                 </DataTemplate>
             </view:IconListPanel.IconContent>

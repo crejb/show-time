@@ -11,15 +11,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ShowTime.Model;
 
-namespace ShowTime.View
+namespace ShowTime.View.ListViews
 {
     /// <summary>
-    /// Interaction logic for SeasonEpisodesView.xaml
+    /// Interaction logic for SeasonsForTVShowListView.xaml
     /// </summary>
-    public partial class SeasonEpisodesListView : UserControl
+    public partial class SeasonsForTVShowListView : UserControl
     {
-        public SeasonEpisodesListView()
+        public SeasonsForTVShowListView()
         {
             InitializeComponent();
         }

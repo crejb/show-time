@@ -46,7 +46,7 @@ namespace ShowTime.ViewModel
         private readonly IDataStore dataStore;
 
         private MainMenuViewModel mainMenuViewModel;
-        private TvShowIconsListViewModel tvShowListViewModel;
+        private IconListViews.TvShowIconListViewModel tvShowListViewModel;
         private BrowseAllShowsViewModel browseAllShowsViewModel;
         private UpdateShowTimeCollectionViewModel updateDataViewModel;
 
@@ -69,7 +69,7 @@ namespace ShowTime.ViewModel
             mainMenuViewModel.BrowseShowsSelected += new Action(mainMenuViewModel_BrowseShowsSelected);
             mainMenuViewModel.ManageShowsSelected += new Action(mainMenuViewModel_ManageShowsSelected);
 
-            tvShowListViewModel = new TvShowIconsListViewModel(dataStore);
+            tvShowListViewModel = new IconListViews.TvShowIconListViewModel(dataStore);
             tvShowListViewModel.TvShowSelected += tvShowListViewModel_TvShowSelected;
 
             browseAllShowsViewModel = new BrowseAllShowsViewModel(dataStore, episodeThumbnailGenerator.FilenameProvider);
@@ -111,7 +111,7 @@ namespace ShowTime.ViewModel
             breadCrumbViewModel.BreadCrumbItems.Add(new BreadCrumbItem("TV Shows", new RelayCommand(param => mainMenuViewModel_WatchShowsSelected())));
             breadCrumbViewModel.BreadCrumbItems.Add(new BreadCrumbTailItem(showId.Name, null));
 
-            var seasonsListViewModel = new SeasonIconsListViewModel(dataStore, showId);
+            var seasonsListViewModel = new IconListViews.SeasonIconListViewModel(dataStore, showId);
             seasonsListViewModel.SeasonSelected += seasonsListViewModel_SeasonSelected;
             OnNavigateToViewRequested(seasonsListViewModel);
         }
@@ -124,7 +124,7 @@ namespace ShowTime.ViewModel
             breadCrumbViewModel.BreadCrumbItems.Add(new BreadCrumbItem(seasonId.ShowId.Name, new RelayCommand(param => tvShowListViewModel_TvShowSelected(seasonId.ShowId))));
             breadCrumbViewModel.BreadCrumbItems.Add(new BreadCrumbTailItem("Season " + seasonId.SeasonNumber, null));
 
-            var episodesListViewModel = new EpisodeIconsListViewModel(dataStore, seasonId, episodeThumbnailGenerator.FilenameProvider);
+            var episodesListViewModel = new IconListViews.EpisodeIconListViewModel(dataStore, seasonId, episodeThumbnailGenerator.FilenameProvider);
             episodesListViewModel.EpisodeSelected += episodesListViewModel_EpisodeSelected;
             OnNavigateToViewRequested(episodesListViewModel);
         }

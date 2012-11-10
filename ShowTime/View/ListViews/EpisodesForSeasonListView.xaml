@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ShowTime.View.SeasonEpisodesListView"
+﻿<UserControl x:Class="ShowTime.View.ListViews.EpisodesForSeasonListView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,24 +7,22 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel Background="Green">
-        <StackPanel.Resources>
-            <viewModel:SeasonEpisodesListViewModel_EpisodeListViewItemConverter x:Key="episodeListItemConverter"></viewModel:SeasonEpisodesListViewModel_EpisodeListViewItemConverter>
-        </StackPanel.Resources>
-        
         <TextBlock Text="{Binding Path=SeasonName}" />
-        
-        
         <ListView 
-            ItemsSource="{Binding Path=Episodes}" 
-            SelectedItem="{Binding Path=SelectedEpisode, Mode=TwoWay, Converter={StaticResource episodeListItemConverter}}">
+            ItemsSource="{Binding Episodes}" 
+            SelectedItem="{Binding Path=SelectedEpisode, Mode=TwoWay}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Number" DisplayMemberBinding="{Binding Path=Number}" />
                     <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Path=Title}" />
                     <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Path=Description}" />
+                    <GridViewColumn Header="Filename" DisplayMemberBinding="{Binding Path=ShortFilename}" />
+                    <GridViewColumn Header="Thumbnail" DisplayMemberBinding="{Binding Path=ThumbnailFilename}" />
+                    <GridViewColumn Header="Watches" DisplayMemberBinding="{Binding Path=WatchCount}" />
+                    <GridViewColumn Header="Last Watched" DisplayMemberBinding="{Binding Path=LastWatchedDescription}" />
+                    <GridViewColumn Header="Bookmark" DisplayMemberBinding="{Binding Path=BookmarkTime}" />
                 </GridView>
             </ListView.View>
-            
         </ListView>
     </StackPanel>
 </UserControl>

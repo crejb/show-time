@@ -6,9 +6,9 @@ using System.Windows.Input;
 using ShowTime.ViewModel.Commands;
 using ShowTime.Model;
 
-namespace ShowTime.ViewModel
+namespace ShowTime.ViewModel.IconListViews
 {
-    public class SeasonIconsListViewModel : ViewModelBase
+    public class SeasonIconListViewModel : ViewModelBase
     {
         public event Action<SeasonId> SeasonSelected;
 
@@ -18,7 +18,7 @@ namespace ShowTime.ViewModel
         private readonly TVShow tvShow;
         public IEnumerable<MenuItemCommand> MenuItemCommands { get { return BuildMenuItemCommands(); } }
 
-        public SeasonIconsListViewModel(IDataStore dataStore, TVShowId tvShowId)
+        public SeasonIconListViewModel(IDataStore dataStore, TVShowId tvShowId)
         {
             this.dataStore = dataStore;
             this.tvShow = dataStore.TVShowRepository.Find(tvShowId);
