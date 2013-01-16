@@ -5,7 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             Focusable="True" KeyDown="ctrlMedia_KeyDown" MouseUp="ctrlMedia_MouseUp" MouseMove="ThisVideoPlayerControl_MouseMove"  >
     <Grid>
         <Grid.Resources>
             <Style x:Key="ControlButtonStyle" TargetType="FrameworkElement">
@@ -15,42 +16,38 @@
         </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Background="Black" x:Name="ctrlMediaPanel">
-            <MediaElement x:Name="ctrlMedia" LoadedBehavior="Manual" ScrubbingEnabled="True" MouseUp="ctrlMedia_MouseUp">
-            </MediaElement>
+        <Grid Background="Black" x:Name="ctrlMediaPanel">
+            <MediaElement x:Name="ctrlMedia" LoadedBehavior="Manual" ScrubbingEnabled="True" />
         </Grid>
-        <StackPanel x:Name="pnlControls" Grid.Row="1">
-            <DockPanel>
-                <TextBox x:Name="ctrlFilename" Text="{Binding Filename, ElementName=ThisVideoPlayerControl}"></TextBox>
-            </DockPanel>
-            <DockPanel>
+        <Border x:Name="pnlControls" BorderBrush="LightGray" BorderThickness="2" Background="DarkGray" Height="Auto" Width="Auto" Margin="10,10,10,10" VerticalAlignment="Bottom">
+            <StackPanel Grid.Row="0">
+                <TextBlock x:Name="ctrlFilename" Foreground="White" Text="{Binding Filename, ElementName=ThisVideoPlayerControl}"></TextBlock>
                 <Slider x:Name="ctrlTimeSlider" 
                         IsMoveToPointEnabled="true"
                         ValueChanged="ctrlTimeSlider_ValueChanged" 
                         Thumb.DragStarted="ctrlTimeSlider_DragStarted"
                         Thumb.DragCompleted="ctrlTimeSlider_DragCompleted"></Slider>
-            </DockPanel>
-            <DockPanel>
-                <Button x:Name="ctrlPlayButton" Style="{StaticResource ControlButtonStyle}"  Click="ctrlPlayButton_Click">
-                    <Image Source="/ShowTime;component/Resources/play.png"></Image>
-                </Button>
-                <Button x:Name="ctrlPauseButton" Style="{StaticResource ControlButtonStyle}"  Click="ctrlPauseButton_Click">
-                    <Image Source="/ShowTime;component/Resources/pause.png"></Image>
-                </Button>
-                <Button x:Name="ctrlStopButton" Style="{StaticResource ControlButtonStyle}" Command="{Binding VideoStoppedCommand, ElementName=ThisVideoPlayerControl}">
-                    <Image Source="/ShowTime;component/Resources/stop.png"></Image>
-                </Button>
+                <DockPanel>
+                    <Button x:Name="ctrlPlayButton" Style="{StaticResource ControlButtonStyle}"  Click="ctrlPlayButton_Click">
+                        <Image Source="/ShowTime;component/Resources/play.png"></Image>
+                    </Button>
+                    <Button x:Name="ctrlPauseButton" Style="{StaticResource ControlButtonStyle}"  Click="ctrlPauseButton_Click">
+                        <Image Source="/ShowTime;component/Resources/pause.png"></Image>
+                    </Button>
+                    <Button x:Name="ctrlStopButton" Style="{StaticResource ControlButtonStyle}" Command="{Binding VideoStoppedCommand, ElementName=ThisVideoPlayerControl}">
+                        <Image Source="/ShowTime;component/Resources/stop.png"></Image>
+                    </Button>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Image Style="{StaticResource ControlButtonStyle}" Source="/ShowTime;component/Resources/volume.png"></Image>
-                    <Slider x:Name="ctrlVolumeSlider" 
-                            Minimum="0" Maximum="1" Value="0.5" Width="70"
-                            IsMoveToPointEnabled="true"
-                            ValueChanged="ctrlVolumeSlider_ValueChanged" ></Slider>
-                </StackPanel>
-            </DockPanel>
-        </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Image Width="20" Height="20" Source="/ShowTime;component/Resources/volume.png"></Image>
+                        <Slider x:Name="ctrlVolumeSlider" 
+                                Minimum="0" Maximum="1" Value="0.5" Width="70" Height="25"
+                                IsMoveToPointEnabled="true"
+                                ValueChanged="ctrlVolumeSlider_ValueChanged" ></Slider>
+                    </StackPanel>
+                </DockPanel>
+            </StackPanel>
+        </Border>
     </Grid>
 </UserControl>

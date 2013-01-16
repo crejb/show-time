@@ -30,7 +30,7 @@
         </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <view:IconListPanel Grid.Row="0" x:Name="ctrlEpisodeList" MenuItemCommands="{Binding MenuItemCommands}" ItemSelected="{Binding SelectEpisodeCommand}" >
             <view:IconListPanel.IconContent>
@@ -49,6 +49,10 @@
                 </DataTemplate>
             </view:IconListPanel.IconContent>
         </view:IconListPanel>
-        <view:EpisodePreviewView Grid.Row="1" DataContext="{Binding SelectedEpisodePreviewViewModel}"></view:EpisodePreviewView>
+        <view:EpisodePreviewView Grid.Row="1" DataContext="{Binding SelectedEpisodePreviewViewModel}">
+            <view:EpisodePreviewView.Background>
+                <SolidColorBrush Color="LightGray" Opacity="0.5"></SolidColorBrush>
+            </view:EpisodePreviewView.Background>
+        </view:EpisodePreviewView>
     </Grid>
 </UserControl>

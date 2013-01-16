@@ -98,13 +98,17 @@ namespace ShowTime.View.Controls
 
         private DispatcherTimer seekPositionPollTimer;
         private DispatcherTimer dragTimer;
+        private DispatcherTimer controlPanelTimer;
         private bool settingSlider = false;
         private bool isDragging = false;
         private bool isFullScreen = false;
+        private bool isPlaying = false;
 
         public VideoPlayerControl()
         {
             InitializeComponent();
+
+            this.Loaded += new RoutedEventHandler(VideoPlayerControl_Loaded);
 
             seekPositionPollTimer = new DispatcherTimer();
             seekPositionPollTimer.Interval = TimeSpan.FromSeconds(1);
@@ -114,8 +118,28 @@ namespace ShowTime.View.Controls
             dragTimer.Interval = TimeSpan.FromSeconds(0.3);
             dragTimer.Tick += new EventHandler(dragTimer_Tick);
 
+            controlPanelTimer = new DispatcherTimer();
+            controlPanelTimer.Interval = TimeSpan.FromSeconds(3);
+            controlPanelTimer.Tick += new EventHandler(controlPanelTimer_Tick);
+            controlPanelTimer.Start();
+
             ctrlMedia.MediaOpened += new RoutedEventHandler(ctrlMedia_MediaOpened);
             ctrlMedia.MediaEnded += new RoutedEventHandler(ctrlMedia_MediaEnded);
+        }
+
+        void controlPanelTimer_Tick(object sender, EventArgs e)
+        {
+            if (!pnlControls.IsMouseOver)
+            {
+                controlPanelTimer.Stop();
+                this.Cursor = Cursors.None;
+                SetControlPanelVisibility(false);
+            }
+        }
+
+        void VideoPlayerControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Focus();
         }
 
         private void ctrlMedia_MediaEnded(object sender, RoutedEventArgs e)
@@ -133,16 +157,19 @@ namespace ShowTime.View.Controls
         {
             ctrlMedia.Source = new Uri(this.Filename);
             ctrlMedia.Play();
+            isPlaying = true;
         }
 
         private void ctrlPlayButton_Click(object sender, RoutedEventArgs e)
         {
             ctrlMedia.Play();
+            isPlaying = true;
         }
 
         private void ctrlPauseButton_Click(object sender, RoutedEventArgs e)
         {
             ctrlMedia.Pause();
+            isPlaying = false;
         }
 
         private void ctrlMedia_MediaOpened(object sender, RoutedEventArgs e)
@@ -231,35 +258,80 @@ namespace ShowTime.View.Controls
         {
             if (e.ChangedButton == MouseButton.Right)
             {
-                if (pnlControls.Visibility == System.Windows.Visibility.Visible)
-                {
-                    pnlControls.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else
-                {
-                    pnlControls.Visibility = System.Windows.Visibility.Visible;
-                }
+                SetControlPanelVisibility(pnlControls.Visibility != System.Windows.Visibility.Visible);
+                return;
+            }
+
+            SetFullScreen(!isFullScreen);
+        }
+
+        private void SetControlPanelVisibility(bool visible)
+        {
+            if (visible)
+            {
+                pnlControls.Visibility = System.Windows.Visibility.Visible;
+            }
+            else
+            {
+                pnlControls.Visibility = System.Windows.Visibility.Collapsed;
+            }
+        }
+
+        private void SetFullScreen(bool fullscreen)
+        {
+            if (isFullScreen == fullscreen)
+            {
                 return;
             }
 
             var window = Window.GetWindow(this);
-            if (isFullScreen)
-            {
-                isFullScreen = false;
-                window.WindowStyle = WindowStyle.SingleBorderWindow;
-                window.WindowState = WindowState.Normal;
-            }
-            else
+            if (fullscreen)
             {
                 window.WindowStyle = WindowStyle.None;
                 window.WindowState = WindowState.Maximized;
                 isFullScreen = true;
+            }
+            else
+            {
+                isFullScreen = false;
+                window.WindowStyle = WindowStyle.SingleBorderWindow;
+                window.WindowState = WindowState.Normal;
             }
         }
 
         private void ctrlVolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             ctrlMedia.Volume = e.NewValue;
+        }
+
+        private void ctrlMedia_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Space:
+                    if (isPlaying)
+                    {
+                        isPlaying = false;
+                        ctrlMedia.Pause();
+                    }
+                    else
+                    {
+                        isPlaying = true;
+                        ctrlMedia.Play();
+                    }
+                    break;
+                case Key.Escape:
+                    SetFullScreen(false);
+                    break;
+            }
+            
+        }
+
+        private void ThisVideoPlayerControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            this.Cursor = Cursors.Arrow;
+            SetControlPanelVisibility(true);
+            controlPanelTimer.Start();
         }
 
         

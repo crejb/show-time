@@ -4,7 +4,7 @@
         xmlns:viewmodel="clr-namespace:ShowTime.ViewModel"
         xmlns:view="clr-namespace:ShowTime.View"
         xmlns:model="clr-namespace:ShowTime.Model"
-        Title="MainWindow" Height="350" Width="525" >
+        Title="MainWindow" Height="400" Width="700" WindowStyle="None" WindowState="Maximized" KeyDown="Window_KeyDown">
     <Window.Resources>
         <ResourceDictionary Source="MainWindowResources.xaml" />
     </Window.Resources>
@@ -18,7 +18,11 @@
                 </GradientStopCollection>
             </LinearGradientBrush>
         </Grid.Resources>
-        <Border Background="{StaticResource BackgroundColour}">
+        <Border BorderBrush="Black" BorderThickness="5">
+            <Border.Background>
+                <ImageBrush ImageSource="/ShowTime;component/Resources/background1.jpg" />
+            </Border.Background>
+            <!--Background="{StaticResource BackgroundColour}"-->
             <DockPanel>
                 <view:NavigatorView x:Name="ctrlNavigator" DockPanel.Dock="Top"></view:NavigatorView>
                 <Grid>

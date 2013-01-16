@@ -86,15 +86,12 @@ namespace ShowTime.ViewModel
 
         private void PlayEpisode()
         {
-            if (playHandler == null)
-            {
-                playHandler = new VideoPlayRequestHandler(
-                    new VideoPlayerController(),
-                    dataStore,
-                    new EpisodeCloseActionsCalculatorProvider(),
-                    new EpisodeCloseActionsExecutor(dataStore)
-                    );
-            }
+            var playHandler = new VideoPlayRequestHandler(
+                new VideoPlayerController(),
+                dataStore,
+                new EpisodeCloseActionsCalculatorProvider(),
+                new EpisodeCloseActionsExecutor(dataStore)
+                );
 
             playHandler.PlayVideo(
                 new VideoPlayRequest(episode.Id, bookmark)

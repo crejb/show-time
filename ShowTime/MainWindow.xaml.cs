@@ -22,6 +22,26 @@ namespace ShowTime
         public MainWindow()
         {
             InitializeComponent();
+
+            this.StateChanged += new EventHandler(MainWindow_StateChanged);
+        }
+
+        void MainWindow_StateChanged(object sender, EventArgs e)
+        {
+            if (WindowState == System.Windows.WindowState.Maximized)
+            {
+                WindowStyle = System.Windows.WindowStyle.None;
+                WindowState = System.Windows.WindowState.Maximized;
+            }
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
+                WindowState = System.Windows.WindowState.Normal;
+            }
         }
     }
 }
