@@ -1,0 +1,1 @@
+A hobby project for me to learn new technologies and patterns such as MVVM via WPF, while producing a media centre application customised to my needs
